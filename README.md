@@ -5,10 +5,10 @@ Dado Validators is an extension of the System.Web.UI.WebControls.BaseValidator c
 
 **Download** [Solution](//github.com/roydukkey/Dado.Validators/zipball/master) | [Assembly](//github.com/downloads/roydukkey/Dado.Validators/DadoValidatorsAssembly-v0.1.0.0.zip)
 
-If you have questions about Guider, email me at `dado@roydukkey.com`.
+If you have questions about Dado Validators, email me at `dado@roydukkey.com`.
 
 ## Features
-* __Styling by Class Name:__ Dado Validators doesn't rely of non-breaking spaces or inline styles, but rather entirly on the class name.
+* __Styling by Class Name:__ Dado Validators doesn't rely of non-breaking spaces or inline styles, but rather entirely on the class name.
 * __Invalid Class Name:__ Invalid class names are assigned to the validator only when the validation event returns false.
 * __Default Error Messages:__ All validators have default error messages.
 
