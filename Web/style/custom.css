@@ -1,0 +1,72 @@
+/*
+//---------------------------------------------------------------------------------
+// Dado Validators, Copyright 2012 roydukkey, 2012-05-24 (Tue, 24 July 2012).
+// Dual licensed under the MIT (http://www.roydukkey.com/mit) and
+// GPL Version 2 (http://www.roydukkey.com/gpl) licenses.
+//---------------------------------------------------------------------------------
+*/
+/* Make HTML 5 elements display block-level for consistent styling */
+article, aside, details, figcaption, figure, header, subheader, nav, footer, hgroup, section, pagewrap, pagecontent, maincontent, content, clear { display: block; }
+
+/*
+-----------Page Layout-----------
+*/
+body {
+	margin: 0;
+	background: #e0e0e0;
+	font: 13px/24px sans-serif;
+}
+pagewrap { width: 960px; margin: 0 auto; }
+pagecontent { padding: 20px; background: #fff; }
+
+/*
+-----------Tables-----------
+*/
+table {
+	margin-bottom: 1.35em;
+	border-collapse: collapse;
+	border-bottom: 1px solid #dbdfe6;
+}
+table th, table td {
+	padding: 5px;
+	line-height: 2.5em;
+}
+table tr th, table tr td {
+	border-top: 1px solid #dbdfe6;
+}
+table tr:nth-child(odd) {
+	background-color: #f9fafb;
+}
+
+/*
+-----------Forms-----------
+*/
+input[type=text], input[type=password], select, textarea {
+	padding: 4px;
+	font: 13.333px/16px Arial, Helvetica, sans-serif;
+}
+table input[type=text], table input[type=password], table select, table textarea {
+	width: 100%; *width: 95%;
+	-webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;
+}
+
+/*
+-----------Validators-----------
+*/
+.validator {
+	display: none;
+	margin: 3px 0;
+	border: 1px solid;
+	border-color: #dba4a4 #e4baba #ebcbcb;
+	border-radius: 2px; -moz-border-radius: 2px; -webkit-border-radius: 2px;
+	padding: 4px 8px;
+	color: #ab5252;
+	background-color: #fee8e8;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fdd8d8), to(#fff9f9));
+	background: -webkit-linear-gradient(top, #fdd8d8, #fff9f9);
+	background: -moz-linear-gradient(top, #fdd8d8, #fff9f9);
+	background: -ms-linear-gradient(top, #fdd8d8, #fff9f9);
+	background: -o-linear-gradient(top, #fdd8d8, #fff9f9);
+	line-height: 17px;
+}
+.validator.invalid { display: inline-block; *display: inline; zoom: 1; }

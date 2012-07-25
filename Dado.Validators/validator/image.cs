@@ -1,0 +1,354 @@
+﻿//---------------------------------------------------------------------------------
+// Dado Validators, Copyright 2012 roydukkey, 2012-05-24 (Tue, 24 July 2012).
+// Dual licensed under the MIT (http://www.roydukkey.com/mit) and
+// GPL Version 2 (http://www.roydukkey.com/gpl) licenses.
+//---------------------------------------------------------------------------------
+
+namespace Dado.Validators
+{
+	using System;
+	using System.ComponentModel;
+	using System.Diagnostics;
+	using System.Drawing;
+	using System.Web.UI;
+	using WebControls = System.Web.UI.WebControls;
+
+	/// <summary>
+	///		Checks if the value of the associated input control meets exact, minimum, and maximum height and width constraints.
+	/// </summary>
+	[
+		ToolboxData("<{0}:ImageValidator runat=\"server\" ControlToValidate=\"ControlId\" MaximumWidth=\"ImageValidator\" />"),
+		ToolboxBitmap(typeof(ResFinder), "Dado.image.custom.bmp")
+	]
+	public class ImageValidator : BaseValidator
+	{
+		#region Fields
+
+		private const string ExactWidthErrorMessage_Default = "The image width must be {0}px.";
+		private const string MinimumWidthErrorMessage_Default = "The image width must not be less than {0}px.";
+		private const string MaximumWidthErrorMessage_Default = "The image width must not be more than {0}px.";
+		private const string ExactHeightErrorMessage_Default = "The image height must be {0}px.";
+		private const string MinimumHeightErrorMessage_Default = "The image height must not be less than {0}px.";
+		private const string MaximumHeightErrorMessage_Default = "The image height must not be more than [n]px.";
+
+		#endregion Fields
+
+		#region Control Attributes
+
+		/// <summary>
+		///		Make ErrorMessage private because there aren't generic ErrorMessages
+		/// </summary>
+		new private string ErrorMessage
+		{
+			get { return base.ErrorMessage; }
+			set { base.ErrorMessage = value; }
+		}
+		/// <summary>
+		///		Make EnableClientScript private because currently client-side validation isn't supported.
+		///		Gets or sets a value indicating whether client-side validation is enabled.
+		/// </summary>
+		new private bool EnableClientScript
+		{
+			get { return false; }
+			set { base.EnableClientScript = value; }
+		}
+		/// <summary>
+		///		Indicates the exact width of the image in the control.
+		/// </summary> 
+		[
+			Category("Behavior"),
+			Themeable(false),
+			DefaultValue(0),
+			Description("Indicates the exact width of the image in the control.")
+		]
+		public int ExactWidth
+		{
+			get {
+				object o = ViewState["ExactWidth"];
+				return o == null ? 0 : int.Parse(o.ToString());
+			}
+			set { ViewState["ExactWidth"] = value; }
+		}
+		/// <summary>
+		///		Message to display when ExactWidth is surpassed.
+		/// </summary>
+		[
+			Category("Appearance"),
+			Themeable(false),
+			DefaultValue(ExactWidthErrorMessage_Default),
+			Description("Message to display when ExactWidth is surpassed.")
+		]
+		public string ExactWidthErrorMessage
+		{
+			get {
+				object o = ViewState["ExactWidthErrorMessage"];
+				return String.Format(o == null ? ExactWidthErrorMessage_Default : (string)o, ExactWidth);
+			}
+			set { ViewState["ExactWidthErrorMessage"] = value; }
+		}
+		/// <summary>
+		///		Indicates the minimum width of the image of the control.
+		/// </summary> 
+		[
+			Category("Behavior"),
+			Themeable(false),
+			DefaultValue(0),
+			Description("Indicates the minimum width of the image in the control.")
+		]
+		public int MinimumWidth
+		{
+			get {
+				object o = ViewState["MinimumWidth"];
+				return o == null ? 0 : int.Parse(o.ToString());
+			}
+			set { ViewState["MinimumWidth"] = value; }
+		}
+		/// <summary>
+		///		Message to display when MinimumWidth is surpassed.
+		/// </summary>
+		[
+			Category("Appearance"),
+			Themeable(false),
+			DefaultValue(MinimumWidthErrorMessage_Default),
+			Description("Message to display when MinimumWidth is surpassed.")
+		]
+		public string MinimumWidthErrorMessage
+		{
+			get {
+				object o = ViewState["MinimumWidthErrorMessage"];
+				return String.Format(o == null ? MinimumWidthErrorMessage_Default : (string)o, MinimumWidth);
+			}
+			set { ViewState["MinimumWidthErrorMessage"] = value; }
+		}
+		/// <summary>
+		///		Indicates the maximum width of the image in the control.
+		/// </summary> 
+		[
+			Category("Behavior"),
+			Themeable(false),
+			DefaultValue(0),
+			Description("Indicates the maximum width of the image in the control.")
+		]
+		public int MaximumWidth
+		{
+			get {
+				object o = ViewState["MaximumWidth"];
+				return o == null ? 0 : int.Parse(o.ToString());
+			}
+			set { ViewState["MaximumWidth"] = value; }
+		}
+		/// <summary>
+		///		Message to display when MaximumWidth is surpassed.
+		/// </summary>
+		[
+			Category("Appearance"),
+			Themeable(false),
+			DefaultValue(MaximumWidthErrorMessage_Default),
+			Description("Message to display when MaximumWidth is surpassed.")
+		]
+		public string MaximumWidthErrorMessage
+		{
+			get {
+				object o = ViewState["MaximumWidthErrorMessage"];
+				return String.Format(o == null ? MaximumWidthErrorMessage_Default : (string)o, MaximumWidth);
+			}
+			set { ViewState["MaximumWidthErrorMessage"] = value; }
+		}
+		/// <summary>
+		///		Indicates the exact height of the image in the control.
+		/// </summary> 
+		[
+		Category("Behavior"),
+		Themeable(false),
+		DefaultValue(0),
+		Description("Indicates the exact height of the image in the control.")
+		]
+		public int ExactHeight
+		{
+			get
+			{
+				object o = ViewState["ExactHeight"];
+				return o == null ? 0 : int.Parse(o.ToString());
+			}
+			set { ViewState["ExactHeight"] = value; }
+		}
+		/// <summary>
+		///		Message to display when ExactHeight is surpassed.
+		/// </summary>
+		[
+			Category("Appearance"),
+			Themeable(false),
+			DefaultValue(ExactHeightErrorMessage_Default),
+			Description("Message to display when ExactHeight is surpassed.")
+		]
+		public string ExactHeightErrorMessage
+		{
+			get
+			{
+				object o = ViewState["ExactHeightErrorMessage"];
+				return String.Format(o == null ? ExactHeightErrorMessage_Default : (string)o, ExactHeight);
+			}
+			set { ViewState["ExactHeightErrorMessage"] = value; }
+		}
+		/// <summary>
+		///		Indicates the minimum height of the image of the control.
+		/// </summary> 
+		[
+			Category("Behavior"),
+			Themeable(false),
+			DefaultValue(0),
+			Description("Indicates the minimum height of the image in the control.")
+		]
+		public int MinimumHeight
+		{
+			get
+			{
+				object o = ViewState["MinimumHeight"];
+				return o == null ? 0 : int.Parse(o.ToString());
+			}
+			set { ViewState["MinimumHeight"] = value; }
+		}
+		/// <summary>
+		///		Message to display when MinimumHeight is surpassed.
+		/// </summary>
+		[
+			Category("Appearance"),
+			Themeable(false),
+			DefaultValue(MinimumHeightErrorMessage_Default),
+			Description("Message to display when MinimumHeight is surpassed.")
+		]
+		public string MinimumHeightErrorMessage
+		{
+			get
+			{
+				object o = ViewState["MinimumHeightErrorMessage"];
+				return String.Format(o == null ? MinimumHeightErrorMessage_Default : (string)o, MinimumHeight);
+			}
+			set { ViewState["MinimumHeightErrorMessage"] = value; }
+		}
+		/// <summary>
+		///		Indicates the maximum height of the image in the control.
+		/// </summary> 
+		[
+			Category("Behavior"),
+			Themeable(false),
+			DefaultValue(0),
+			Description("Indicates the maximum height of the image in the control.")
+		]
+		public int MaximumHeight
+		{
+			get {
+				object o = ViewState["MaximumHeight"];
+				return o == null ? 0 : int.Parse(o.ToString());
+			}
+			set { ViewState["MaximumHeight"] = value; }
+		}
+		/// <summary>
+		///		Message to display when MaximumHeight is surpassed.
+		/// </summary>
+		[
+			Category("Appearance"),
+			Themeable(false),
+			DefaultValue(MaximumHeightErrorMessage_Default),
+			Description("Message to display when MaximumHeight is surpassed.")
+		]
+		public string MaximumHeightErrorMessage
+		{
+			get {
+				object o = ViewState["MaximumHeightErrorMessage"];
+				return String.Format(o == null ? MaximumHeightErrorMessage_Default : (string)o, MaximumHeight);
+			}
+			set { ViewState["MaximumHeightErrorMessage"] = value; }
+		}
+
+		#endregion Control Attributes
+
+		#region Protected Methods
+
+		/// <summary>
+		///		Adds the HTML attributes and styles that need to be rendered for the control to the specified <see cref='System.Web.UI.HtmlTextWriter'/> object.
+		/// </summary>
+		/// <param name="writer">An <see cref='System.Web.UI.HtmlTextWriter'/> that represents the output stream to render HTML content on the client.</param>
+		protected override void AddAttributesToRender(HtmlTextWriter writer)
+		{
+			base.AddAttributesToRender(writer);
+			if (RenderUplevel) {
+				string id = ClientID;
+				HtmlTextWriter expandoAttributeWriter = (EnableLegacyRendering) ? writer : null;
+				//AddExpandoAttribute(expandoAttributeWriter, id, "evaluationfunction", "ImageDimensionsValidatorEvaluateIsValid", false);
+				AddExpandoAttribute(expandoAttributeWriter, id, "exactwidth", ExactWidth.ToString());
+				AddExpandoAttribute(expandoAttributeWriter, id, "exactwidtherrormessage", ExactWidthErrorMessage);
+				AddExpandoAttribute(expandoAttributeWriter, id, "exactheight", ExactHeight.ToString());
+				AddExpandoAttribute(expandoAttributeWriter, id, "exactheighterrormessage", ExactHeightErrorMessage);
+				AddExpandoAttribute(expandoAttributeWriter, id, "minimumwidth", MinimumWidth.ToString());
+				AddExpandoAttribute(expandoAttributeWriter, id, "minimumwidtherrormessage", MinimumWidthErrorMessage);
+				AddExpandoAttribute(expandoAttributeWriter, id, "minimumheight", MinimumHeight.ToString());
+				AddExpandoAttribute(expandoAttributeWriter, id, "minimumheighterrormessage", MinimumHeightErrorMessage);
+				AddExpandoAttribute(expandoAttributeWriter, id, "maximumwidth", MaximumWidth.ToString());
+				AddExpandoAttribute(expandoAttributeWriter, id, "maximumwidtherrormessage", MaximumWidthErrorMessage);
+				AddExpandoAttribute(expandoAttributeWriter, id, "maximumheight", MaximumHeight.ToString());
+				AddExpandoAttribute(expandoAttributeWriter, id, "maximumheighterrormessage", MaximumHeightErrorMessage);
+			}
+		}
+		/// <summary>
+		///		Called during the validation stage when ASP.NET processes a Web Form.
+		/// </summary>
+		/// <returns>true if the value in the input control is valid; otherwise, false.</returns>
+		protected override bool EvaluateIsValid()
+		{
+			Control control = FindControl(this.ControlToValidate);
+			if (control is WebControls.FileUpload) {
+				WebControls.FileUpload fileUpload = (WebControls.FileUpload)control;
+
+				// Check if Lengths nullify each other
+				if (MaximumWidth > 0 && MinimumWidth > MaximumWidth || MaximumHeight > 0 && MinimumHeight > MaximumHeight) {
+					Debug.Fail("MinimumWidth cannot be great than MaximumWidth and MinimumHeight cannot be great than MaximumHeight.");
+					return false;
+				}
+				// Do not validate empty control. Use a required field validator.
+				if (fileUpload.PostedFile.ContentLength > 0) {
+					using (Image image = Image.FromStream(fileUpload.PostedFile.InputStream)) {
+						// See if value not is equal to ExactWidth
+						if (ExactWidth > 0 && image.Width != ExactWidth) {
+							ErrorMessage = ExactWidthErrorMessage;
+							return false;
+						}
+
+						// See if value not is equal to ExactHeight
+						if (ExactHeight > 0 && image.Height != ExactHeight) {
+							ErrorMessage = ExactHeightErrorMessage;
+							return false;
+						}
+
+						// See if value is less than MinimumWidth
+						if (MinimumWidth > 0 && image.Width < MinimumWidth) {
+							ErrorMessage = MinimumWidthErrorMessage;
+							return false;
+						}
+
+						// See if value is less than MinimumHeight
+						if (MinimumHeight > 0 && image.Height < MinimumHeight) {
+							ErrorMessage = MinimumHeightErrorMessage;
+							return false;
+						}
+
+						// See if value is greater than MaximumWidth
+						if (MaximumWidth > 0 && image.Width > MaximumWidth) {
+							ErrorMessage = MaximumWidthErrorMessage;
+							return false;
+						}
+
+						// See if value is greater than MaximumHeight
+						if (MaximumHeight > 0 && image.Height > MaximumHeight) {
+							ErrorMessage = MaximumHeightErrorMessage;
+							return false;
+						}
+					}
+				}
+			}
+			return true;
+		}
+
+		#endregion Protected Methods
+	}
+}
