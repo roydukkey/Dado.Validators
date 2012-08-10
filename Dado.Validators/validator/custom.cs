@@ -1,5 +1,5 @@
 ﻿//---------------------------------------------------------------------------------
-// Dado Validators, Copyright 2012 roydukkey, 2012-05-24 (Tue, 24 July 2012).
+// Dado Validators, Copyright 2012 roydukkey, 2012-08-09 (Thu, 09 August 2012).
 // Dual licensed under the MIT (http://www.roydukkey.com/mit) and
 // GPL Version 2 (http://www.roydukkey.com/gpl) licenses.
 //---------------------------------------------------------------------------------
@@ -42,10 +42,7 @@ namespace Dado.Validators
 		]
 		public string ClientValidationFunction
 		{
-			get {
-				object o = ViewState["ClientValidationFunction"];
-				return o == null ? String.Empty : (string)o;
-			}
+			get { return (string) (ViewState["ClientValidationFunction"] ?? String.Empty); }
 			set { ViewState["ClientValidationFunction"] = value; }
 		}
 		/// <summary>
@@ -59,10 +56,7 @@ namespace Dado.Validators
 		]
 		public bool ValidateEmptyText
 		{
-			get {
-				object o = ViewState["ValidateEmptyText"];
-				return o == null ? false : (bool)o;
-			}
+			get { return (bool) (ViewState["ValidateEmptyText"] ?? false); }
 			set { ViewState["ValidateEmptyText"] = value; }
 		}
 

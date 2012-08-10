@@ -1,5 +1,5 @@
 ﻿<%-----------------------------------------------------------------------------------
-// Dado Validators, Copyright 2012 roydukkey, 2012-05-24 (Tue, 24 July 2012).
+// Dado Validators, Copyright 2012 roydukkey, 2012-08-09 (Thu, 09 August 2012).
 // Dual licensed under the MIT (http://www.roydukkey.com/mit) and
 // GPL Version 2 (http://www.roydukkey.com/gpl) licenses.
 -----------------------------------------------------------------------------------%>
@@ -79,6 +79,18 @@
 				<td valign="top">
 					<asp:FileUpload ID="fupImage" runat="server" />
 					<Dado:ImageValidator runat="server" ControlToValidate="fupImage" ValidationGroup="vlgSubmit" ExactWidth="200" ExactHeight="250" />
+				</td>
+			</tr>
+			<tr>
+				<th valign="top" align="right">Int32 Validator:</th>
+				<td valign="top">
+					<asp:TextBox ID="txtInt32" runat="server" />
+					<Dado:TypeValidator runat="server" ControlToValidate="txtInt32" ValidationGroup="vlgSubmit" Type="Int32" />
+				</td>
+				<th valign="top" align="right">SByte Validator:</th>
+				<td valign="top">
+					<asp:TextBox ID="txtSByte" runat="server" />
+					<Dado:TypeValidator runat="server" ControlToValidate="txtSByte" ValidationGroup="vlgSubmit" Type="SByte" />
 				</td>
 			</tr>
 		</table>

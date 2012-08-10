@@ -1,5 +1,5 @@
 ﻿//---------------------------------------------------------------------------------
-// Dado Validators, Copyright 2012 roydukkey, 2012-05-24 (Tue, 24 July 2012).
+// Dado Validators, Copyright 2012 roydukkey, 2012-08-09 (Thu, 09 August 2012).
 // Dual licensed under the MIT (http://www.roydukkey.com/mit) and
 // GPL Version 2 (http://www.roydukkey.com/gpl) licenses.
 //---------------------------------------------------------------------------------
@@ -63,10 +63,7 @@ namespace Dado.Validators
 		]
 		public int ExactWidth
 		{
-			get {
-				object o = ViewState["ExactWidth"];
-				return o == null ? 0 : int.Parse(o.ToString());
-			}
+			get { return (int)(ViewState["ExactWidth"] ?? default(int)); }
 			set { ViewState["ExactWidth"] = value; }
 		}
 		/// <summary>
@@ -80,10 +77,7 @@ namespace Dado.Validators
 		]
 		public string ExactWidthErrorMessage
 		{
-			get {
-				object o = ViewState["ExactWidthErrorMessage"];
-				return String.Format(o == null ? ExactWidthErrorMessage_Default : (string)o, ExactWidth);
-			}
+			get { return String.Format((string)(ViewState["ExactWidthErrorMessage"] ?? ExactWidthErrorMessage_Default), ExactWidth); }
 			set { ViewState["ExactWidthErrorMessage"] = value; }
 		}
 		/// <summary>
@@ -97,10 +91,7 @@ namespace Dado.Validators
 		]
 		public int MinimumWidth
 		{
-			get {
-				object o = ViewState["MinimumWidth"];
-				return o == null ? 0 : int.Parse(o.ToString());
-			}
+			get { return (int)(ViewState["MinimumWidth"] ?? default(int)); }
 			set { ViewState["MinimumWidth"] = value; }
 		}
 		/// <summary>
@@ -114,10 +105,7 @@ namespace Dado.Validators
 		]
 		public string MinimumWidthErrorMessage
 		{
-			get {
-				object o = ViewState["MinimumWidthErrorMessage"];
-				return String.Format(o == null ? MinimumWidthErrorMessage_Default : (string)o, MinimumWidth);
-			}
+			get { return String.Format((string)(ViewState["MinimumWidthErrorMessage"] ?? MinimumWidthErrorMessage_Default), MinimumWidth); }
 			set { ViewState["MinimumWidthErrorMessage"] = value; }
 		}
 		/// <summary>
@@ -131,10 +119,7 @@ namespace Dado.Validators
 		]
 		public int MaximumWidth
 		{
-			get {
-				object o = ViewState["MaximumWidth"];
-				return o == null ? 0 : int.Parse(o.ToString());
-			}
+			get { return (int)(ViewState["MaximumWidth"] ?? default(int)); }
 			set { ViewState["MaximumWidth"] = value; }
 		}
 		/// <summary>
@@ -148,10 +133,7 @@ namespace Dado.Validators
 		]
 		public string MaximumWidthErrorMessage
 		{
-			get {
-				object o = ViewState["MaximumWidthErrorMessage"];
-				return String.Format(o == null ? MaximumWidthErrorMessage_Default : (string)o, MaximumWidth);
-			}
+			get { return String.Format((string)(ViewState["MaximumWidthErrorMessage"] ?? MaximumWidthErrorMessage_Default), MaximumWidth); }
 			set { ViewState["MaximumWidthErrorMessage"] = value; }
 		}
 		/// <summary>
@@ -165,11 +147,7 @@ namespace Dado.Validators
 		]
 		public int ExactHeight
 		{
-			get
-			{
-				object o = ViewState["ExactHeight"];
-				return o == null ? 0 : int.Parse(o.ToString());
-			}
+			get { return (int)(ViewState["ExactHeight"] ?? default(int)); }
 			set { ViewState["ExactHeight"] = value; }
 		}
 		/// <summary>
@@ -183,11 +161,7 @@ namespace Dado.Validators
 		]
 		public string ExactHeightErrorMessage
 		{
-			get
-			{
-				object o = ViewState["ExactHeightErrorMessage"];
-				return String.Format(o == null ? ExactHeightErrorMessage_Default : (string)o, ExactHeight);
-			}
+			get { return String.Format((string)(ViewState["ExactHeightErrorMessage"] ?? ExactHeightErrorMessage_Default), ExactHeight); }
 			set { ViewState["ExactHeightErrorMessage"] = value; }
 		}
 		/// <summary>
@@ -201,11 +175,7 @@ namespace Dado.Validators
 		]
 		public int MinimumHeight
 		{
-			get
-			{
-				object o = ViewState["MinimumHeight"];
-				return o == null ? 0 : int.Parse(o.ToString());
-			}
+			get { return (int)(ViewState["MinimumHeight"] ?? default(int)); }
 			set { ViewState["MinimumHeight"] = value; }
 		}
 		/// <summary>
@@ -219,11 +189,7 @@ namespace Dado.Validators
 		]
 		public string MinimumHeightErrorMessage
 		{
-			get
-			{
-				object o = ViewState["MinimumHeightErrorMessage"];
-				return String.Format(o == null ? MinimumHeightErrorMessage_Default : (string)o, MinimumHeight);
-			}
+			get { return String.Format((string)(ViewState["MinimumHeightErrorMessage"] ?? MinimumHeightErrorMessage_Default), MinimumHeight); }
 			set { ViewState["MinimumHeightErrorMessage"] = value; }
 		}
 		/// <summary>
@@ -237,10 +203,7 @@ namespace Dado.Validators
 		]
 		public int MaximumHeight
 		{
-			get {
-				object o = ViewState["MaximumHeight"];
-				return o == null ? 0 : int.Parse(o.ToString());
-			}
+			get { return (int)(ViewState["MaximumHeight"] ?? default(int)); }
 			set { ViewState["MaximumHeight"] = value; }
 		}
 		/// <summary>
@@ -254,10 +217,7 @@ namespace Dado.Validators
 		]
 		public string MaximumHeightErrorMessage
 		{
-			get {
-				object o = ViewState["MaximumHeightErrorMessage"];
-				return String.Format(o == null ? MaximumHeightErrorMessage_Default : (string)o, MaximumHeight);
-			}
+			get { return String.Format((string)(ViewState["MaximumHeightErrorMessage"] ?? MaximumHeightErrorMessage_Default), MaximumHeight); }
 			set { ViewState["MaximumHeightErrorMessage"] = value; }
 		}
 

@@ -1,5 +1,5 @@
 ﻿//---------------------------------------------------------------------------------
-// Dado Validators, Copyright 2012 roydukkey, 2012-05-24 (Tue, 24 July 2012).
+// Dado Validators, Copyright 2012 roydukkey, 2012-08-09 (Thu, 09 August 2012).
 // Dual licensed under the MIT (http://www.roydukkey.com/mit) and
 // GPL Version 2 (http://www.roydukkey.com/gpl) licenses.
 //---------------------------------------------------------------------------------
@@ -32,10 +32,7 @@ namespace Dado.Validators
 		]
 		public WebControls.ValidationDataType Type
 		{
-			get {
-				object o = ViewState["Type"];
-				return o == null ? WebControls.ValidationDataType.String : (WebControls.ValidationDataType)o;
-			}
+			get { return (WebControls.ValidationDataType) (ViewState["Type"] ?? WebControls.ValidationDataType.String); }
 			set {
 				if (value < WebControls.ValidationDataType.String || value > WebControls.ValidationDataType.Currency)
 					throw new ArgumentOutOfRangeException("value");
@@ -53,10 +50,7 @@ namespace Dado.Validators
 		]
 		public bool CultureInvariantValues
 		{
-			get {
-				object o = ViewState["CultureInvariantValues"];
-				return o == null ? false : (bool)o;
-			}
+			get { return (bool) (ViewState["CultureInvariantValues"] ?? false); }
 			set { ViewState["CultureInvariantValues"] = value; }
 		}
 

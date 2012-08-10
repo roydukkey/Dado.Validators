@@ -1,5 +1,5 @@
 ﻿//---------------------------------------------------------------------------------
-// Dado Validators, Copyright 2012 roydukkey, 2012-05-24 (Tue, 24 July 2012).
+// Dado Validators, Copyright 2012 roydukkey, 2012-08-09 (Thu, 09 August 2012).
 // Dual licensed under the MIT (http://www.roydukkey.com/mit) and
 // GPL Version 2 (http://www.roydukkey.com/gpl) licenses.
 //---------------------------------------------------------------------------------
@@ -49,10 +49,7 @@ namespace Dado.Validators
 		]
 		public int MinimumLength
 		{
-			get {
-				object o = ViewState["MinimumLength"];
-				return o == null ? 0 : int.Parse(o.ToString());
-			}
+			get { return (int)(ViewState["MinimumLength"] ?? default(int)); }
 			set { ViewState["MinimumLength"] = value; }
 		}
 		/// <summary>
@@ -67,9 +64,8 @@ namespace Dado.Validators
 		public string MinimumLengthErrorMessage
 		{
 			get {
-				object o = ViewState["MinimumLengthErrorMessage"];
 				return String.Format(
-					o == null ? MinimumLengthErrorMessage_Default : (string)o,
+					(string)(ViewState["MinimumLengthErrorMessage"] ?? MinimumLengthErrorMessage_Default),
 					MinimumLength,
 					MinimumLength > 1 ? "s" : null
 				);
@@ -87,10 +83,7 @@ namespace Dado.Validators
 		]
 		public int MaximumLength
 		{
-			get {
-				object o = ViewState["MaximumLength"];
-				return o == null ? 0 : int.Parse(o.ToString());
-			}
+			get { return (int)(ViewState["MaximumLength"] ?? default(int)); }
 			set { ViewState["MaximumLength"] = value; }
 		}
 		/// <summary>
@@ -105,9 +98,8 @@ namespace Dado.Validators
 		public string MaximumLengthErrorMessage
 		{
 			get {
-				object o = ViewState["MaximumLengthErrorMessage"];
 				return String.Format(
-					o == null ? MaximumLengthErrorMessage_Default : (string)o,
+					(string)(ViewState["MaximumLengthErrorMessage"] ?? MaximumLengthErrorMessage_Default),
 					MaximumLength,
 					MaximumLength > 1 ? "s" : null
 				);

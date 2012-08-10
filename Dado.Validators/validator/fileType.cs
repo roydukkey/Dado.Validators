@@ -1,5 +1,5 @@
 ﻿//---------------------------------------------------------------------------------
-// Dado Validators, Copyright 2012 roydukkey, 2012-05-24 (Tue, 24 July 2012).
+// Dado Validators, Copyright 2012 roydukkey, 2012-08-09 (Thu, 09 August 2012).
 // Dual licensed under the MIT (http://www.roydukkey.com/mit) and
 // GPL Version 2 (http://www.roydukkey.com/gpl) licenses.
 //---------------------------------------------------------------------------------
@@ -68,10 +68,7 @@ namespace Dado.Validators
 		]
 		public string ValidTypes
 		{
-			get {
-				object o = ViewState["ValidTypes"];
-				return o == null ? String.Empty : (string)o;
-			}
+			get { return (string) (ViewState["ValidTypes"] ?? String.Empty); }
 			set { ViewState["ValidTypes"] = value; }
 		}
 

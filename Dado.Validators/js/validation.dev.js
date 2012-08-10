@@ -1,5 +1,5 @@
 //---------------------------------------------------------------------------------
-// Dado Validators, Copyright 2012 roydukkey, 2012-05-24 (Tue, 24 July 2012).
+// Dado Validators, Copyright 2012 roydukkey, 2012-08-09 (Thu, 09 August 2012).
 // Dual licensed under the MIT (http://www.roydukkey.com/mit) and
 // GPL Version 2 (http://www.roydukkey.com/gpl) licenses.
 //---------------------------------------------------------------------------------
@@ -40,6 +40,44 @@ function LengthValidatorEvaluateIsValid(val) { var min = ~~val.minimumlength, ma
 		}
 	}
 	return true;
+}
+
+function TypeValidatorEvaluateIsValid(val) { var v = ValidatorGetValue(val.controltovalidate);
+	if(v == null) return true;
+	switch (val.type) {
+    case "Boolean":
+			return (v.toLowerCase() == "true" || v.toLowerCase() == "false");
+
+		case "Byte":
+			return +v >= 0 && +v <= 255;
+
+		case "Char":
+			return v.length == 1;
+
+		case "Decimal":
+			v = v.replace(",", "");
+			return +v >= -79228162514264337593543950335 && +v <= 79228162514264337593543950335;
+
+		case "Double":
+			v = v.replace(",", "");
+			return +v >= -1.7976931348623157E+308 && +v <= 1.7976931348623157E+308;
+
+		case "Int16":
+			return +v >= -32768 && +v <= 32767;
+
+		case "Int64":
+			return +v >= -9223372036854775808 && +v <= 9223372036854775807;
+
+		case "SByte":
+			return +v >= -128 && +v <= 127;
+
+		case "Single":
+			return +v >= -3.402823e38 && +v <= 3.402823e38;
+
+		case "Int32":
+		default:
+			return +v >= -2147483648 && +v <= 2147483647;
+	}
 }
 
 function ValidateOnLoad() {

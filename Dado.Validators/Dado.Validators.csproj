@@ -47,6 +47,7 @@
     <Compile Include="validator\base.cs" />
     <Compile Include="validator\baseCompare.cs" />
     <Compile Include="validator\compare.cs" />
+    <Compile Include="validator\type.cs" />
     <Compile Include="validator\custom.cs" />
     <Compile Include="validator\email.cs" />
     <Compile Include="validator\fileType.cs" />

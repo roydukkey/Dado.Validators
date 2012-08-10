@@ -1,5 +1,5 @@
 ﻿//---------------------------------------------------------------------------------
-// Dado Validators, Copyright 2012 roydukkey, 2012-05-24 (Tue, 24 July 2012).
+// Dado Validators, Copyright 2012 roydukkey, 2012-08-09 (Thu, 09 August 2012).
 // Dual licensed under the MIT (http://www.roydukkey.com/mit) and
 // GPL Version 2 (http://www.roydukkey.com/gpl) licenses.
 //---------------------------------------------------------------------------------
@@ -36,10 +36,7 @@ namespace Dado.Validators
 		]
 		public string MaximumValue
 		{
-			get {
-				object o = ViewState["MaximumValue"];
-				return o == null ? String.Empty : (string)o;
-			}
+			get { return (string)(ViewState["MaximumValue"] ?? String.Empty); }
 			set { ViewState["MaximumValue"] = value; }
 		}
 		/// <summary>
@@ -53,10 +50,7 @@ namespace Dado.Validators
 		]
 		public string MinimumValue
 		{
-			get {
-				object o = ViewState["MinimumValue"];
-				return o == null ? String.Empty : (string)o;
-			}
+			get { return (string)(ViewState["MinimumValue"] ?? String.Empty); }
 			set { ViewState["MinimumValue"] = value; }
 		}
 

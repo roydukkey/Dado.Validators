@@ -12,18 +12,33 @@ namespace Dado.Validators
 	using System.Drawing;
 	using System.Web.UI;
 
+	public enum ValidationType
+	{
+		Boolean,
+		Byte,
+		Char,
+		Decimal,
+		Double,
+		Int16,
+		Int32,
+		Int64,
+		SByte,
+		Single
+	}
+
 	/// <summary>
-	///		Makes the associated input control a required field.
+	///		Checks if the value of the associated input control has an acceptable type.
 	/// </summary>
 	[
-		ToolboxData("<{0}:RequiredFieldValidator runat=\"server\" ControlToValidate=\"ControlId\" />"),
-		ToolboxBitmap(typeof(ResFinder), "Dado.image.requiredField.bmp")
+		DefaultProperty("Type"),
+		ToolboxData("<{0}:TypeValidator runat=\"server\" ControlToValidate=\"ControlId\" Type=\"Int32\" />"),
+		ToolboxBitmap(typeof(ResFinder), "Dado.image.custom.bmp")
 	]
-	public class RequiredFieldValidator : BaseValidator
+	public class TypeValidator : BaseValidator
 	{
 		#region Fields
 
-		private const string DEFAULT_ERROR_MESSAGE = "Please enter a value.";
+		private const string DEFAULT_ERROR_MESSAGE = "Please enter a value of type {0}.";
 
 		#endregion Fields
 
@@ -37,26 +52,26 @@ namespace Dado.Validators
 		]
 		public override string ErrorMessage
 		{
-			get { return base.ErrorMessage; }
+			get { return String.Format(base.ErrorMessage ?? DEFAULT_ERROR_MESSAGE, Type); }
 			set { base.ErrorMessage = value; }
 		}
 		/// <summary>
-		///		Gets or sets the initial value of the associated input control.
+		///		Gets or sets the data type that the values are validated against.
 		/// </summary>
 		[
 			Category("Behavior"),
 			Themeable(false),
-			DefaultValue(""),
-			Description("Gets or sets the initial value of the associated input control.")
+			DefaultValue(ValidationType.Int32),
+			Description("Gets or sets the data type that the values are validated against.")
 		]
-		public string InitialValue
+		public ValidationType Type
 		{
-			get { return (string)(ViewState["InitialValue"] ?? String.Empty); }
-			set { ViewState["InitialValue"] = value; }
+			get { return (ValidationType)(ViewState["Type"] ?? ValidationType.Int32); }
+			set { ViewState["Type"] = value; }
 		}
 
 		#endregion Control Attributes
-		
+
 		#region Protected Methods
 
 		/// <summary>
@@ -78,8 +93,8 @@ namespace Dado.Validators
 			if (RenderUplevel) {
 				string id = ClientID;
 				HtmlTextWriter expandoAttributeWriter = (EnableLegacyRendering) ? writer : null;
-				AddExpandoAttribute(expandoAttributeWriter, id, "evaluationfunction", "RequiredFieldValidatorEvaluateIsValid", false);
-				AddExpandoAttribute(expandoAttributeWriter, id, "initialvalue", InitialValue);
+				AddExpandoAttribute(expandoAttributeWriter, id, "evaluationfunction", "TypeValidatorEvaluateIsValid", false);
+				AddExpandoAttribute(expandoAttributeWriter, id, "type", Type.ToString());
 			}
 		}
 		/// <summary>
@@ -95,8 +110,48 @@ namespace Dado.Validators
 				return true;
 			}
 
-			// See if the control has changed
-			return !controlValue.Trim().Equals(InitialValue.Trim());
+			switch (Type) {
+				case ValidationType.Boolean:
+					bool t1;
+					return Boolean.TryParse(controlValue, out t1);
+
+				case ValidationType.Byte:
+					byte t2;
+					return Byte.TryParse(controlValue, out t2);
+
+				case ValidationType.Char:
+					char t3;
+					return Char.TryParse(controlValue, out t3);
+
+				case ValidationType.Decimal:
+					decimal t4;
+					return Decimal.TryParse(controlValue, out t4);
+
+				case ValidationType.Double:
+					double t5;
+					return Double.TryParse(controlValue, out t5);
+
+				case ValidationType.Int16:
+					short t6;
+					return Int16.TryParse(controlValue, out t6);
+
+				case ValidationType.Int64:
+					long t7;
+					return Int64.TryParse(controlValue, out t7);
+
+				case ValidationType.SByte:
+					sbyte t11;
+					return SByte.TryParse(controlValue, out t11);
+
+				case ValidationType.Single:
+					float t12;
+					return Single.TryParse(controlValue, out t12);
+
+				case ValidationType.Int32:
+				default:
+					int t13;
+					return Int32.TryParse(controlValue, out t13);
+			}
 		}
 
 		#endregion Protected Methods
