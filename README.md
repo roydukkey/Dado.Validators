@@ -1,9 +1,9 @@
-Dado.Validators (version 0.2.0.0)
+Dado.Validators (version 0.3.0.0)
 =================================
 
 Dado Validators is an extension of the System.Web.UI.WebControls.BaseValidator class provided by .NET 4.
 
-**Download** [Solution](//github.com/roydukkey/Dado.Validators/zipball/master) | [Assembly](//github.com/downloads/roydukkey/Dado.Validators/DadoValidatorsAssembly-v0.2.0.0.zip)
+**Download** [Solution](//github.com/roydukkey/Dado.Validators/zipball/master) | [Assembly](//github.com/downloads/roydukkey/Dado.Validators/DadoValidatorsAssembly-v0.3.0.0.zip)
 
 If you have questions about Dado Validators, email me at `dado@roydukkey.com`.
 
@@ -74,9 +74,16 @@ If you have questions about Dado Validators, email me at `dado@roydukkey.com`.
 			Checks if the value of the associated input control is in a valid time format. ie: HH:mm, h:mm tt, h:mmtt, h:mm, hh:mm tt, hh:mmtt, hh:mm
 		</td>
 		<td valign="top">
+			<strong>Type:</strong><br />
+			Checks if the value of the associated input control is of a specified .NET type. ie: Boolean, Byte, Char, DateTime, Decimal, Double, Int16, Int32, Int64, SByte, Single
+		</td>
+	</tr>
+	<tr>
+		<td valign="top">
 			<strong>Zip Code:</strong><br />
 			Checks if the value of the associated input control is a valid zip code.
 		</td>
+		<td></td>
 	</tr>
 </table>
 

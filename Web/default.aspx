@@ -1,5 +1,5 @@
 ﻿<%-----------------------------------------------------------------------------------
-// Dado Validators, Copyright 2012 roydukkey, 2012-08-09 (Thu, 09 August 2012).
+// Dado Validators, Copyright 2013 roydukkey, 2013-01-11 (Fri, 11 January 2013).
 // Dual licensed under the MIT (http://www.roydukkey.com/mit) and
 // GPL Version 2 (http://www.roydukkey.com/gpl) licenses.
 -----------------------------------------------------------------------------------%>
@@ -91,6 +91,13 @@
 				<td valign="top">
 					<asp:TextBox ID="txtSByte" runat="server" />
 					<Dado:TypeValidator runat="server" ControlToValidate="txtSByte" ValidationGroup="vlgSubmit" Type="SByte" />
+				</td>
+			</tr>
+			<tr>
+				<th valign="top" align="right">DateTime Validator:</th>
+				<td valign="top">
+					<asp:TextBox ID="txtDateTime" runat="server" />
+					<Dado:TypeValidator ID="vldDateTime" runat="server" ControlToValidate="txtDateTime" ValidationGroup="vlgSubmit" Type="DateTime" />
 				</td>
 			</tr>
 		</table>

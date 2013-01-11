@@ -1,5 +1,5 @@
 ﻿//---------------------------------------------------------------------------------
-// Dado Validators, Copyright 2012 roydukkey, 2012-08-09 (Thu, 09 August 2012).
+// Dado Validators, Copyright 2013 roydukkey, 2013-01-11 (Fri, 11 January 2013).
 // Dual licensed under the MIT (http://www.roydukkey.com/mit) and
 // GPL Version 2 (http://www.roydukkey.com/gpl) licenses.
 //---------------------------------------------------------------------------------
@@ -125,8 +125,7 @@ namespace Dado.Validators
 			if (controlToValidate.Length > 0) {
 				controlValue = GetControlValidationValue(controlToValidate);
 				Debug.Assert(controlValue != null, "Should have been caught be property check");
-				// If the text is empty, we return true. Whitespace is ignored for coordination wiht 
-				// RequiredFieldValidator.
+				// If the text is empty, we return true. Whitespace is ignored for coordination with RequiredFieldValidator.
 				if ((controlValue == null || controlValue.Trim().Length == 0) && !ValidateEmptyText) return true;
 			}
 
