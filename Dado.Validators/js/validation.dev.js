@@ -30,12 +30,12 @@ function LengthValidatorEvaluateIsValid(val) { var min = ~~val.minimumlength, ma
 	if (ValidatorGetValue(val.controltovalidate) != "" && (max <= 0 && min > 0 || min <= max)) {
 		// See if value is greater than MinimumLength
 		if (min > 0 && ValidatorGetValue(val.controltovalidate).length < min) {
-			val.innerHTML = val.minimumerrormessage;
+			val.innerHTML = "<span>" + val.minimumerrormessage + "</span>";
 			return false;
 		}
 		// See if value is greater than MaximumLength
 		if (max > 0 && ValidatorGetValue(val.controltovalidate).length > max) {
-			val.innerHTML = val.maximumerrormessage;
+			val.innerHTML = "<span>" + val.maximumerrormessage + "</span>";
 			return false;
 		}
 	}
@@ -74,7 +74,7 @@ function TypeValidatorEvaluateIsValid(val) { var v = ValidatorGetValue(val.contr
 		case "Single":
 			return +v >= -3.402823e38 && +v <= 3.402823e38;
 
-		case "Int32":
+		//case "Int32":
 		default:
 			return +v >= -2147483648 && +v <= 2147483647;
 	}

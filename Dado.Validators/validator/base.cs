@@ -12,6 +12,7 @@ namespace Dado.Validators
 	using System;
 	using System.ComponentModel;
 	using System.Diagnostics;
+	using System.Drawing;
 	using System.Reflection;
 	using System.Web.Compilation;
 	using WebControls = System.Web.UI.WebControls;
@@ -33,6 +34,7 @@ namespace Dado.Validators
 		private const string _cssClass = "validator";
 		private const string _cssClassInvalid = "invalid";
 		private string _defaultErrorMessage = DEFAULT_ERROR_MESSAGE;
+    private bool wasForeColorSet = false;
 
 		private bool preRenderCalled;
 		private static bool _partialRenderingChecked;
@@ -105,6 +107,24 @@ namespace Dado.Validators
 			set { base.EnableClientScript = value; }
 		}
 		
+		/// <summary>
+		///		Gets or sets the text color of validation messages.
+		/// </summary>
+		[
+			Category("Behavior"),
+			Themeable(false),
+      DefaultValue(typeof(Color), "Empty"),
+			Description("")
+		]
+		public override Color ForeColor
+		{
+			get { return base.ForeColor; }
+			set {
+				wasForeColorSet = true;
+				base.ForeColor = value;
+			}
+		}
+		
 		#endregion Control Attributes
 
 		#region Protected Properties
@@ -131,6 +151,15 @@ namespace Dado.Validators
 
 		#region Protected Methods
 
+		/// <summary>
+		///		Registers the validator on the page.
+		/// </summary>
+		/// <param name="e">A <see cref='System.EventArgs'/> that contains the event data.</param>
+		protected override void OnInit(EventArgs e)
+		{
+			if (!wasForeColorSet) ForeColor = Color.Empty;
+			base.OnInit(e);
+		}
 		/// <summary>
 		///		Checks the client brower and configures the validator for compatibility prior to rendering.
 		/// </summary>
@@ -205,9 +234,15 @@ namespace Dado.Validators
 			if (displayTags) RenderBeginTag(writer);
 
 			if (displayContents) {
-				if (Text.Trim().Length > 0) RenderContents(writer);
-				else if (base.HasControls() /* || HasRenderDelegate() Note: There may be an issue here, but as far as I know validator's don't depend on this */) base.RenderContents(writer);
-				else writer.Write(ErrorMessage);
+				writer.Write("<span>");
+				if (Text.Trim().Length > 0) {
+					RenderContents(writer);
+				}
+				else if (base.HasControls() /* || HasRenderDelegate() Note: There may be an issue here, but as far as I know validator's don't depend on this */)
+					base.RenderContents(writer);
+				else
+					writer.Write(ErrorMessage);
+				writer.Write("</span>");
 			}
 
 			if (displayTags) RenderEndTag(writer);

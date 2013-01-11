@@ -12,17 +12,54 @@ namespace Dado.Validators
 	using System.Drawing;
 	using System.Web.UI;
 
+	/// <summary>
+	///		The types available for validation.
+	/// </summary>
 	public enum ValidationType
 	{
+		/// <summary>
+		///		Provides server-side and client-side validation.
+		/// </summary>
 		Boolean,
+		/// <summary>
+		///		Provides server-side and client-side validation.
+		/// </summary>
 		Byte,
+		/// <summary>
+		///		Provides server-side and client-side validation.
+		/// </summary>
 		Char,
+		/// <summary>
+		///		Provides server-side validation.
+		/// </summary>
+		DateTime,
+		/// <summary>
+		///		Provides server-side and client-side validation.
+		/// </summary>
 		Decimal,
+		/// <summary>
+		///		Provides server-side and client-side validation.
+		/// </summary>
 		Double,
+		/// <summary>
+		///		Provides server-side and client-side validation.
+		/// </summary>
 		Int16,
+		/// <summary>
+		///		Provides server-side and client-side validation.
+		/// </summary>
 		Int32,
+		/// <summary>
+		///		Provides server-side and client-side validation.
+		/// </summary>
 		Int64,
+		/// <summary>
+		///		Provides server-side and client-side validation.
+		/// </summary>
 		SByte,
+		/// <summary>
+		///		Provides server-side and client-side validation.
+		/// </summary>
 		Single
 	}
 
@@ -69,6 +106,20 @@ namespace Dado.Validators
 			get { return (ValidationType)(ViewState["Type"] ?? ValidationType.Int32); }
 			set { ViewState["Type"] = value; }
 		}
+		/// <summary>
+		///		Gets or sets a Boolean value indicating whether empty text should be validated.
+		/// </summary>
+		[
+			Category("Behavior"),
+			Themeable(false),
+			DefaultValue(false),
+			Description("Gets or sets a Boolean value indicating whether empty text should be validated."),
+		]
+		public bool ValidateEmptyText
+		{
+			get { return (bool)(ViewState["ValidateEmptyText"] ?? false); }
+			set { ViewState["ValidateEmptyText"] = value; }
+		}
 
 		#endregion Control Attributes
 
@@ -84,17 +135,28 @@ namespace Dado.Validators
 			base.OnInit(e);
 		}
 		/// <summary>
+		///		Checks the client brower and configures the validator for compatibility prior to rendering.
+		/// </summary>
+		/// <param name="e">A <see cref='System.EventArgs'/> that contains the event data.</param>
+		protected override void OnPreRender(EventArgs e)
+		{
+			EnableClientScript = !(Type == ValidationType.DateTime);
+			base.OnPreRender(e);
+		}
+		/// <summary>
 		///		Adds the HTML attributes and styles that need to be rendered for the control to the specified <see cref='System.Web.UI.HtmlTextWriter'/> object.
 		/// </summary>
 		/// <param name="writer">An <see cref='System.Web.UI.HtmlTextWriter'/> that represents the output stream to render HTML content on the client.</param>
 		protected override void AddAttributesToRender(HtmlTextWriter writer)
 		{
 			base.AddAttributesToRender(writer);
+
 			if (RenderUplevel) {
 				string id = ClientID;
 				HtmlTextWriter expandoAttributeWriter = (EnableLegacyRendering) ? writer : null;
 				AddExpandoAttribute(expandoAttributeWriter, id, "evaluationfunction", "TypeValidatorEvaluateIsValid", false);
 				AddExpandoAttribute(expandoAttributeWriter, id, "type", Type.ToString());
+				AddExpandoAttribute(expandoAttributeWriter, id, "validateemptytext", ValidateEmptyText ? "true" : "false", false);
 			}
 		}
 		/// <summary>
@@ -105,7 +167,7 @@ namespace Dado.Validators
 		{
 			// Get the control value, return true if it is not found 
 			string controlValue = GetControlValidationValue(ControlToValidate);
-			if (controlValue == null) {
+			if ((controlValue == null || controlValue.Trim().Length == 0) && !ValidateEmptyText) {
 				Debug.Fail("Should have been caught by PropertiesValid check");
 				return true;
 			}
@@ -123,34 +185,38 @@ namespace Dado.Validators
 					char t3;
 					return Char.TryParse(controlValue, out t3);
 
+				case ValidationType.DateTime: // Doesn't Provide Client-Side Validation
+					DateTime t4;
+					return DateTime.TryParse(controlValue, out t4);
+
 				case ValidationType.Decimal:
-					decimal t4;
-					return Decimal.TryParse(controlValue, out t4);
+					decimal t5;
+					return Decimal.TryParse(controlValue, out t5);
 
 				case ValidationType.Double:
-					double t5;
-					return Double.TryParse(controlValue, out t5);
+					double t6;
+					return Double.TryParse(controlValue, out t6);
 
 				case ValidationType.Int16:
-					short t6;
-					return Int16.TryParse(controlValue, out t6);
+					short t7;
+					return Int16.TryParse(controlValue, out t7);
 
 				case ValidationType.Int64:
-					long t7;
-					return Int64.TryParse(controlValue, out t7);
+					long t8;
+					return Int64.TryParse(controlValue, out t8);
 
 				case ValidationType.SByte:
-					sbyte t11;
-					return SByte.TryParse(controlValue, out t11);
+					sbyte t9;
+					return SByte.TryParse(controlValue, out t9);
 
 				case ValidationType.Single:
-					float t12;
-					return Single.TryParse(controlValue, out t12);
+					float t10;
+					return Single.TryParse(controlValue, out t10);
 
-				case ValidationType.Int32:
+				//case ValidationType.Int32:
 				default:
-					int t13;
-					return Int32.TryParse(controlValue, out t13);
+					int t11;
+					return Int32.TryParse(controlValue, out t11);
 			}
 		}
 
