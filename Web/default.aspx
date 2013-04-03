@@ -1,5 +1,5 @@
 ﻿<%-----------------------------------------------------------------------------------
-// Dado Validators, Copyright 2013 roydukkey, 2013-01-23 (Wed, 23 January 2013).
+// Dado Validators, Copyright 2013 roydukkey, 2013-04-03 (Wed, 03 April 2013).
 // Dual licensed under the MIT (http://www.roydukkey.com/mit) and
 // GPL Version 2 (http://www.roydukkey.com/gpl) licenses.
 -----------------------------------------------------------------------------------%>
@@ -97,7 +97,12 @@
 				<th valign="top" align="right">DateTime Validator:</th>
 				<td valign="top">
 					<asp:TextBox ID="txtDateTime" runat="server" />
-					<Dado:TypeValidator ID="vldDateTime" runat="server" ControlToValidate="txtDateTime" ValidationGroup="vlgSubmit" Type="DateTime" />
+					<Dado:CompareValidator runat="server" ControlToValidate="txtDateTime" ValidationGroup="vlgSubmit" Type="Date" Operator="DataTypeCheck" ErrorMessage="Please enter a valid date." />
+				</td>
+				<th valign="top" align="right">URI Validator:</th>
+				<td valign="top">
+					<asp:TextBox ID="txtUri" runat="server" />
+					<Dado:UriValidator runat="server" ControlToValidate="txtUri" ValidationGroup="vlgSubmit" Kind="Absolute" TryToFix="true" />
 				</td>
 			</tr>
 		</table>

@@ -58,7 +58,7 @@
     <Compile Include="validator\regularExpression.cs" />
     <Compile Include="validator\requiredField.cs" />
     <Compile Include="validator\time.cs" />
-    <Compile Include="validator\url.cs" />
+    <Compile Include="validator\uri.cs" />
     <Compile Include="validator\usdCurrency.cs" />
     <Compile Include="validator\zipCode.cs" />
   </ItemGroup>

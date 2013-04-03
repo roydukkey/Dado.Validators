@@ -1,5 +1,5 @@
 ﻿//---------------------------------------------------------------------------------
-// Dado Validators, Copyright 2013 roydukkey, 2013-01-23 (Wed, 23 January 2013).
+// Dado Validators, Copyright 2013 roydukkey, 2013-04-03 (Wed, 03 April 2013).
 // Dual licensed under the MIT (http://www.roydukkey.com/mit) and
 // GPL Version 2 (http://www.roydukkey.com/gpl) licenses.
 //---------------------------------------------------------------------------------
@@ -29,10 +29,10 @@ namespace Dado.Validators
 		///		Provides server-side and client-side validation.
 		/// </summary>
 		Char,
-		/// <summary>
-		///		Provides server-side validation.
-		/// </summary>
+		/*
+		Use: <Dado:CompareValidator runat="server" ControlToValidate="txtDateActive" ValidationGroup="vlgSubmit" Type="Date" Operator="DataTypeCheck" ErrorMessage="Please enter a valid date." />
 		DateTime,
+		*/
 		/// <summary>
 		///		Provides server-side and client-side validation.
 		/// </summary>
@@ -135,15 +135,6 @@ namespace Dado.Validators
 			base.OnInit(e);
 		}
 		/// <summary>
-		///		Checks the client brower and configures the validator for compatibility prior to rendering.
-		/// </summary>
-		/// <param name="e">A <see cref='System.EventArgs'/> that contains the event data.</param>
-		protected override void OnPreRender(EventArgs e)
-		{
-			EnableClientScript = !(Type == ValidationType.DateTime);
-			base.OnPreRender(e);
-		}
-		/// <summary>
 		///		Adds the HTML attributes and styles that need to be rendered for the control to the specified <see cref='System.Web.UI.HtmlTextWriter'/> object.
 		/// </summary>
 		/// <param name="writer">An <see cref='System.Web.UI.HtmlTextWriter'/> that represents the output stream to render HTML content on the client.</param>
@@ -185,38 +176,34 @@ namespace Dado.Validators
 					char t3;
 					return Char.TryParse(controlValue, out t3);
 
-				case ValidationType.DateTime: // Doesn't Provide Client-Side Validation
-					DateTime t4;
-					return DateTime.TryParse(controlValue, out t4);
-
 				case ValidationType.Decimal:
-					decimal t5;
-					return Decimal.TryParse(controlValue, out t5);
+					decimal t4;
+					return Decimal.TryParse(controlValue, out t4);
 
 				case ValidationType.Double:
-					double t6;
-					return Double.TryParse(controlValue, out t6);
+					double t5;
+					return Double.TryParse(controlValue, out t5);
 
 				case ValidationType.Int16:
-					short t7;
-					return Int16.TryParse(controlValue, out t7);
+					short t6;
+					return Int16.TryParse(controlValue, out t6);
 
 				case ValidationType.Int64:
-					long t8;
-					return Int64.TryParse(controlValue, out t8);
+					long t7;
+					return Int64.TryParse(controlValue, out t7);
 
 				case ValidationType.SByte:
-					sbyte t9;
-					return SByte.TryParse(controlValue, out t9);
+					sbyte t8;
+					return SByte.TryParse(controlValue, out t8);
 
 				case ValidationType.Single:
-					float t10;
-					return Single.TryParse(controlValue, out t10);
+					float t9;
+					return Single.TryParse(controlValue, out t9);
 
 				//case ValidationType.Int32:
 				default:
-					int t11;
-					return Int32.TryParse(controlValue, out t11);
+					int t10;
+					return Int32.TryParse(controlValue, out t10);
 			}
 		}
 

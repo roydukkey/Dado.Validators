@@ -121,13 +121,13 @@ namespace Web {
         protected global::System.Web.UI.WebControls.TextBox txtDateTime;
         
         /// <summary>
-        /// vldDateTime control.
+        /// txtUri control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Dado.Validators.TypeValidator vldDateTime;
+        protected global::System.Web.UI.WebControls.TextBox txtUri;
         
         /// <summary>
         /// btnSubmit control.

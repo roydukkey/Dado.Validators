@@ -1,5 +1,5 @@
 ﻿//---------------------------------------------------------------------------------
-// Dado Validators, Copyright 2013 roydukkey, 2013-01-23 (Wed, 23 January 2013).
+// Dado Validators, Copyright 2013 roydukkey, 2013-04-03 (Wed, 03 April 2013).
 // Dual licensed under the MIT (http://www.roydukkey.com/mit) and
 // GPL Version 2 (http://www.roydukkey.com/gpl) licenses.
 //---------------------------------------------------------------------------------
@@ -65,7 +65,7 @@ namespace Dado.Validators
 		#region Public Events
 
 		/// <summary>
-		///		Represents the method that will handle the <see langword='ServerValidate'/> event of a <see cref='WebMedia.WebControls.CustomValidator'/>.
+		///		Represents the method that will handle the <see langword='ServerValidate'/> event of a <see cref='Dado.Validators.CustomValidator'/>.
 		/// </summary>
 		[
 			Description("Represents the method that will handle the ServerValidate event of a CustomValidator.")
@@ -81,7 +81,7 @@ namespace Dado.Validators
 		#region Protected Methods
 
 		/// <summary>
-		///		Adds the properties of the <see cref='WebMedia.WebControls.CustomValidator'/> control to the output stream for rendering on the client.
+		///		Adds the properties of the <see cref='Dado.Validators.CustomValidator'/> control to the output stream for rendering on the client.
 		/// </summary>
 		/// <param name="writer">A <see cref='System.Web.UI.HtmlTextWriter'/> that contains the output stream for rendering on the client.</param>
 		protected override void AddAttributesToRender(HtmlTextWriter writer)
