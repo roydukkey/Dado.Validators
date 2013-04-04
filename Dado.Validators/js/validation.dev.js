@@ -1,5 +1,5 @@
 //---------------------------------------------------------------------------------
-// Dado Validators, Copyright 2013 roydukkey, 2013-04-03 (Wed, 03 April 2013).
+// Dado Validators, Copyright 2013 roydukkey, 2013-04-04 (Thur, 04 April 2013).
 // Dual licensed under the MIT (http://www.roydukkey.com/mit) and
 // GPL Version 2 (http://www.roydukkey.com/gpl) licenses.
 //---------------------------------------------------------------------------------
@@ -23,6 +23,15 @@ function ValidatorUpdateDisplay(val) {
 		!val.isvalid || ( navigator.userAgent.indexOf("Mac") > -1 && navigator.userAgent.indexOf("MSIE") > -1 )
 	)
 		val.className += (val.className ? " " : "") + val.invalidClassName;
+}
+
+function RegularExpressionValidatorEvaluateIsValid(val) {
+	var value = ValidatorGetValue(val.controltovalidate);
+	if (ValidatorTrim(value).length == 0)
+			return true;
+	var rx = new RegExp(val.validationexpression, val.expressionoptions);
+	var matches = rx.exec(value);
+	return (matches != null && value == matches[0]);
 }
 
 function LengthValidatorEvaluateIsValid(val) { var min = ~~val.minimumlength, max = ~~val.maximumlength;

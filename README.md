@@ -1,9 +1,9 @@
-Dado.Validators (version 0.4.0.0)
+Dado.Validators (version 0.5.0.0)
 =================================
 
 Dado Validators is an extension of the System.Web.UI.WebControls.BaseValidator class provided by .NET 4.
 
-**Download** [Solution](//github.com/roydukkey/Dado.Validators/zipball/master) | [Assembly](//github.com/roydukkey/Dado.Validators/blob/master/Release/DadoValidatorsAssembly-v0.4.0.0.zip?raw=true)
+**Download** [Solution](//github.com/roydukkey/Dado.Validators/zipball/master) | [Assembly](//github.com/roydukkey/Dado.Validators/blob/master/Release/DadoValidatorsAssembly-v0.5.0.0.zip?raw=true)
 
 If you have questions about Dado Validators, email me at `dado@roydukkey.com`.
 
@@ -87,7 +87,6 @@ If you have questions about Dado Validators, email me at `dado@roydukkey.com`.
 			<strong>URI:</strong><br />
 			Checks if the value of the associated input control is a valid a well formatted URI, either relative, absolute, or both.
 		</td>
-		<td></td>
 	</tr>
 </table>
 

@@ -1,5 +1,5 @@
 ﻿//---------------------------------------------------------------------------------
-// Dado Validators, Copyright 2013 roydukkey, 2013-04-03 (Wed, 03 April 2013).
+// Dado Validators, Copyright 2013 roydukkey, 2013-04-04 (Thur, 04 April 2013).
 // Dual licensed under the MIT (http://www.roydukkey.com/mit) and
 // GPL Version 2 (http://www.roydukkey.com/gpl) licenses.
 //---------------------------------------------------------------------------------
@@ -47,6 +47,20 @@ namespace Dado.Validators
 				ViewState["ValidationExpression"] = value;
 			}
 		}
+		/// <summary>
+		///		Gets or sets the data type that the values are validated against.
+		/// </summary>
+		[
+			Category("Behavior"),
+			Themeable(false),
+			DefaultValue(false),
+			Description("Gets or sets the data type that the values are validated against.")
+		]
+		public virtual bool IgnoreCase
+		{
+			get { return (bool)(ViewState["IgnoreCase"] ?? false); }
+			set { ViewState["IgnoreCase"] = value; }
+		}
 
 		#endregion Control Attributes
 
@@ -63,8 +77,10 @@ namespace Dado.Validators
 				string id = ClientID;
 				HtmlTextWriter expandoAttributeWriter = (EnableLegacyRendering) ? writer : null;
 				AddExpandoAttribute(expandoAttributeWriter, id, "evaluationfunction", "RegularExpressionValidatorEvaluateIsValid", false);
-				if (ValidationExpression.Length > 0)
+				if (ValidationExpression.Length > 0) {
 					AddExpandoAttribute(expandoAttributeWriter, id, "validationexpression", ValidationExpression);
+					AddExpandoAttribute(expandoAttributeWriter, id, "expressionoptions", IgnoreCase ? "i" : "", false);
+				}
 			}
 		}
 		/// <summary>
@@ -79,8 +95,15 @@ namespace Dado.Validators
 			if (controlValue == null || controlValue.Trim().Length == 0) return true;
 
 			try {
+				// Regex Options
+				RegexOptions options = RegexOptions.None;
+
+				// Ignore Case
+				if (IgnoreCase)
+					options |= RegexOptions.IgnoreCase;
+
 				// we are looking for an exact match, not just a search hit 
-				Match m = Regex.Match(controlValue, ValidationExpression);
+				Match m = Regex.Match(controlValue, ValidationExpression, options);
 				return (m.Success && m.Index == 0 && m.Length == controlValue.Length);
 			}
 			catch {
