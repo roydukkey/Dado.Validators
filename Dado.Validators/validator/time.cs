@@ -1,5 +1,5 @@
 ﻿//---------------------------------------------------------------------------------
-// Dado Validators, Copyright 2013 roydukkey, 2013-06-11 (Tues, 11 June 2013).
+// Dado Validators, Copyright 2013 roydukkey.
 // Dual licensed under the MIT (http://www.roydukkey.com/mit) and
 // GPL Version 2 (http://www.roydukkey.com/gpl) licenses.
 //---------------------------------------------------------------------------------
@@ -77,10 +77,10 @@ namespace Dado.Validators
 
 		#endregion Protected Methods
 
-		#region Static Methods
+		#region Public Methods
 
 		/// <summary>
-		///		Returns the validate value as a TimeSpan
+		///		Returns the validated value as a TimeSpan
 		/// </summary>
 		/// <returns></returns>
 		public TimeSpan? ValidatedValue()
@@ -94,6 +94,6 @@ namespace Dado.Validators
 			return (TimeSpan?)DateTime.ParseExact(controlValue, TIME_FORMATS, null, DateTimeStyles.None).TimeOfDay;
 		}
 
-		#endregion Static Methods
+		#endregion Public Methods
 	}
 }

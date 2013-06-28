@@ -1,5 +1,5 @@
 ﻿<%-----------------------------------------------------------------------------------
-// Dado Validators, Copyright 2013 roydukkey, 2013-06-11 (Tues, 11 June 2013).
+// Dado Validators, Copyright 2013 roydukkey.
 // Dual licensed under the MIT (http://www.roydukkey.com/mit) and
 // GPL Version 2 (http://www.roydukkey.com/gpl) licenses.
 -----------------------------------------------------------------------------------%>
@@ -64,7 +64,7 @@
 				<th valign="top" align="right">Phone Validator:</th>
 				<td valign="top">
 					<asp:TextBox ID="txtPhoneNumber" runat="server" Text="(555) 896-4571" />
-					<Dado:PhoneValidator runat="server" ControlToValidate="txtPhoneNumber" ValidationGroup="vlgSubmit" />
+					<Dado:PhoneValidator ID="vldPhoneNumber" runat="server" ControlToValidate="txtPhoneNumber" ValidationGroup="vlgSubmit" AllowExtension="true" />
 				</td>
 				<th valign="top" align="right"></th>
 				<td valign="top"></td>
@@ -108,6 +108,8 @@
 		</table>
 	
 		<asp:Button ID="btnSubmit" runat="server" ValidationGroup="vlgSubmit" Text="Submit" />
+
+		<asp:Literal ID="litTest" runat="server" />
 
 	</asp:Panel>
 

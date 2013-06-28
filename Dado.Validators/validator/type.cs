@@ -1,5 +1,5 @@
 ﻿//---------------------------------------------------------------------------------
-// Dado Validators, Copyright 2013 roydukkey, 2013-06-11 (Tues, 11 June 2013).
+// Dado Validators, Copyright 2013 roydukkey.
 // Dual licensed under the MIT (http://www.roydukkey.com/mit) and
 // GPL Version 2 (http://www.roydukkey.com/gpl) licenses.
 //---------------------------------------------------------------------------------
@@ -29,10 +29,6 @@ namespace Dado.Validators
 		///		Provides server-side and client-side validation.
 		/// </summary>
 		Char,
-		/*
-		Use: <Dado:CompareValidator runat="server" ControlToValidate="txtDateActive" ValidationGroup="vlgSubmit" Type="Date" Operator="DataTypeCheck" ErrorMessage="Please enter a valid date." />
-		DateTime,
-		*/
 		/// <summary>
 		///		Provides server-side and client-side validation.
 		/// </summary>

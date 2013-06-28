@@ -1,5 +1,5 @@
 ﻿//---------------------------------------------------------------------------------
-// Dado Validators, Copyright 2013 roydukkey, 2013-06-11 (Tues, 11 June 2013).
+// Dado Validators, Copyright 2013 roydukkey.
 // Dual licensed under the MIT (http://www.roydukkey.com/mit) and
 // GPL Version 2 (http://www.roydukkey.com/gpl) licenses.
 //---------------------------------------------------------------------------------
@@ -7,8 +7,11 @@
 namespace Dado.Validators
 {
 	using System;
-	using System.Drawing;
 	using System.ComponentModel;
+	using System.Diagnostics;
+	using System.Drawing;
+	using System.Linq;
+	using System.Text.RegularExpressions;
 	using System.Web.UI;
 
 	/// <summary>
@@ -22,8 +25,15 @@ namespace Dado.Validators
 	{
 		#region Fields
 
-		private const string VALIDATION_EXPRESSION = @"^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$";
+		private const string NUMBER_EXPRESSION = @"(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})";
+		private const string EXTENSION_EXPRESSION = @"(?:\s*(?:{0})\s*(\d{{1,{1}}}))?";
+
+		private const string VALIDATION_EXPRESSION = "^{0}$";
+
+		private const string DEFAULT_EXPRESSION = "^" + NUMBER_EXPRESSION + "$";
 		private const string DEFAULT_ERROR_MESSAGE = "Please enter a valid phone number.";
+		private const int DEFAULT_MAXIMUM_EXTENSION_LENGTH = 4;
+		private const string DEFAULT_EXTENSION_PREFIXES = "#,x,ext,extension";
 
 		#endregion Fields
 
@@ -41,20 +51,110 @@ namespace Dado.Validators
 			set { base.ErrorMessage = value; }
 		}
 		/// <summary>
+		///		Deterimes whether phone extension should be included in validation.
+		/// </summary>
+		[
+			Category("Behavior"),
+			Themeable(false),
+			DefaultValue(false),
+			Description("Deterimes whether phone extension should be included in validation.")
+		]
+		public bool AllowExtension
+		{
+			get { return (bool)(ViewState["AllowExtension"] ?? false); }
+			set { ViewState["AllowExtension"] = value; }
+		}
+		/// <summary>
+		///		Indicates a comma delimited list of extension prefixes.
+		/// </summary>
+		[
+			Category("Behavior"),
+			Themeable(false),
+			DefaultValue(DEFAULT_EXTENSION_PREFIXES),
+			Description("Indicates a comma delimited list of extension prefixes.")
+		]
+		public string ExtensionPrefixes
+		{
+			get { return (string)(ViewState["ExtensionPrefixes"] ?? DEFAULT_EXTENSION_PREFIXES); }
+			set { ViewState["ExtensionPrefixes"] = value; }
+		}
+		/// <summary>
+		///		Deterimes the maximum length of a valid phone extension.
+		/// </summary>
+		[
+			Category("Behavior"),
+			Themeable(false),
+			DefaultValue(DEFAULT_MAXIMUM_EXTENSION_LENGTH),
+			Description("Deterimes the maximum length of a valid phone extension.")
+		]
+		public int MaximumExtensionLength
+		{
+			get { return (int)(ViewState["MaximumExtensionLength"] ?? false); }
+			set { ViewState["MaximumExtensionLength"] = value; }
+		}
+		/// <summary>
 		///		Indicates the regular expression assigned to be the validation criteria.
 		/// </summary> 
 		[
 			Browsable(false),
 			EditorBrowsable(EditorBrowsableState.Never),
-			DefaultValue(VALIDATION_EXPRESSION)
+			DefaultValue(DEFAULT_EXPRESSION)
 		]
 		public override string ValidationExpression
 		{
-			get { return VALIDATION_EXPRESSION; }
+			get {
+				return String.Format(VALIDATION_EXPRESSION, NUMBER_EXPRESSION + (AllowExtension ? BuildExtentionRegex() : null));
+			}
 			set {
 				throw new NotSupportedException(
 					String.Format(Global.NOT_SUPPORTED_EXCEPTION, "ValidationExpression", this.GetType().ToString())
 				);
+			}
+		}
+		/// <summary>
+		///		Gets the validated value as a proper phone number.
+		/// </summary>
+		[
+			Themeable(false),
+			Description("Gets the validated value as a proper phone number.")
+		]
+		public virtual string ValidatedPhoneNumber
+		{
+			get {
+				if(!IsValid)
+					return null;
+
+				// Get the control value, return true if it is not found
+				string controlValue = GetControlValidationValue(ControlToValidate);
+				if (String.IsNullOrEmpty(controlValue)) {
+					Debug.Fail("Should have been caught by PropertiesValid check");
+					return null;
+				}
+
+				return Regex.Replace(controlValue, BuildExtentionRegex(), "").Trim();
+			}
+		}
+		/// <summary>
+		///		Gets the validated value as a proper phone extension.
+		/// </summary>
+		[
+			Themeable(false),
+			Description("Gets the validated value as a proper phone extension.")
+		]
+		public virtual string ValidatedExtension
+		{
+			get {
+				if(!IsValid)
+					return null;
+
+				// Get the control value, return true if it is not found
+				string controlValue = GetControlValidationValue(ControlToValidate);
+				if (String.IsNullOrEmpty(controlValue)) {
+					Debug.Fail("Should have been caught by PropertiesValid check");
+					return null;
+				}
+
+				return Regex.Replace(controlValue, NUMBER_EXPRESSION, "");
 			}
 		}
 
@@ -71,7 +171,26 @@ namespace Dado.Validators
 			DefaultErrorMessage = DEFAULT_ERROR_MESSAGE;
 			base.OnInit(e);
 		}
-
 		#endregion Protected Methods
+
+		#region Private Methods
+
+		/// <summary>
+		///		Registers the validator on the page.
+		/// </summary>
+		/// <param name="e">A <see cref='System.EventArgs'/> that contains the event data.</param>
+		private string BuildExtentionRegex()
+		{
+			string parsedExtensions = "";
+
+			foreach (string ext in ExtensionPrefixes.Split(',').Distinct()) {
+				if (!String.IsNullOrWhiteSpace(ext))
+					parsedExtensions = parsedExtensions.Append("|", Regex.Escape(ext.Trim()));
+			}
+
+			return String.Format(EXTENSION_EXPRESSION, parsedExtensions, DEFAULT_MAXIMUM_EXTENSION_LENGTH);
+		}
+
+		#endregion Private Methods
 	}
 }

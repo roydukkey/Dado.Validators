@@ -1,4 +1,4 @@
-Dado.Validators (version 0.5.1.0)
+Dado.Validators (version 0.6.0.0)
 =================================
 
 Dado Validators is an extension of the System.Web.UI.WebControls.BaseValidator class provided by .NET 4.
@@ -7,7 +7,7 @@ Dado Validators is an extension of the System.Web.UI.WebControls.BaseValidator c
 
 
 ## Features
-* __Styling by Class Name:__ Dado Validators doesn't rely of non-breaking spaces or inline styles, but rather entirely on the class name.
+* __Styling by Class Name:__ Dado Validators doesn't rely on non-breaking spaces or inline styles, but rather entirely on the class name.
 * __Invalid Class Name:__ Invalid class names are assigned to the validator only when the validation event returns false.
 * __Default Error Messages:__ All validators have default error messages.
 
@@ -34,7 +34,7 @@ Dado Validators is an extension of the System.Web.UI.WebControls.BaseValidator c
 		</td>
 		<td valign="top">
 			<strong>File Type:</strong><br />
-			Checks if the value of the associated input control has an acceptable file extension.
+			Checks if the value of the associated input control has an acceptable file extension by resctriction or allowance.
 		</td>
 	</tr>
 	<tr>
@@ -50,7 +50,7 @@ Dado Validators is an extension of the System.Web.UI.WebControls.BaseValidator c
 	<tr>
 		<td valign="top">
 			<strong>Phone:</strong><br />
-			Checks if the value of the associated input control is a valid phone number.
+			Checks if the value of the associated input control is a valid phone number. Allows speficication of extensions or whether to allow them at all.
 		</td>
 		<td valign="top">
 			<strong>Range:</strong><br />
