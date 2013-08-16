@@ -64,7 +64,7 @@ Dado Validators is an extension of the System.Web.UI.WebControls.BaseValidator c
 		</td>
 		<td valign="top">
 			<strong>Require Field:</strong><br />
-			Makes the associated input control a required field. Added support for CheckBoxLists.
+			Makes the associated input control a required field. Added support for CheckBox and CheckBoxLists.
 		</td>
 	</tr>
 	<tr>

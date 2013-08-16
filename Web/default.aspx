@@ -127,6 +127,14 @@
 					<Dado:RequiredFieldValidator runat="server" ControlToValidate="rblRadioButtonList" ValidationGroup="vlgSubmit" />
 				</td>
 			</tr>
+			<tr>
+				<th valign="top" align="right">CheckBox Validator:</th>
+				<td valign="top">
+					<asp:CheckBox ID="ckbCheckBox" runat="server" Text="I agree with the policies and terms." />
+					<Dado:RequiredFieldValidator runat="server" ControlToValidate="ckbCheckBox" ValidationGroup="vlgSubmit" />
+				</td>
+				<td colspan="2"></td>
+			</tr>
 		</table>
 	
 		<asp:Button ID="btnSubmit" runat="server" ValidationGroup="vlgSubmit" Text="Submit" />

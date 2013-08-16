@@ -90,11 +90,12 @@ function TypeValidatorEvaluateIsValid(val) { var v = ValidatorGetValue(val.contr
 }
 
 function RequiredFieldValidatorEvaluateIsValid(val) {
-	if(val.ischeckboxlist === "false") {
-		return ValidatorTrim(ValidatorGetValue(val.controltovalidate)) != ValidatorTrim(val.initialvalue);
+	// Validate for Checkbox
+	if(val.validatefor === "checkbox") {
+		return document.getElementById(val.controltovalidate).checked
 	}
-	// Validate for Checkbox and Radio Lists
-	else {
+	// Validate for CheckboxList
+	else if(val.validatefor === "checkboxlist") {
 		var list = document.getElementById(val.controltovalidate)
 			, inputs = list.getElementsByTagName("input")
 			, i = 0;
@@ -104,6 +105,10 @@ function RequiredFieldValidatorEvaluateIsValid(val) {
 				return true;
 
 		return false;
+	}
+	// Default provided validation
+	else {
+		return ValidatorTrim(ValidatorGetValue(val.controltovalidate)) != ValidatorTrim(val.initialvalue);
 	}
 }
 

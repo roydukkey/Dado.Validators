@@ -25,7 +25,9 @@ namespace Dado.Validators
 		#region Fields
 
 		private const string DEFAULT_ERROR_MESSAGE = "Please enter a value.";
-		private const string DEFAULT_LIST_ERROR_MESSAGE = "Please select a option.";
+		private const string DEFAULT_CHECKBOX_ERROR_MESSAGE = "You must select this option.";
+		private const string DEFAULT_LIST_ERROR_MESSAGE = "Please select an option.";
+		private bool _isCheckBox = false;
 		private bool _isCheckBoxList = false;
 		private bool _isRadioButtonList = false;
 
@@ -69,7 +71,11 @@ namespace Dado.Validators
 		/// <param name="e">A <see cref='System.EventArgs'/> that contains the event data.</param>
 		protected override void OnInit(EventArgs e)
 		{
-			DefaultErrorMessage = PropertiesValid && (_isCheckBoxList || _isRadioButtonList) ? DEFAULT_LIST_ERROR_MESSAGE : DEFAULT_ERROR_MESSAGE;
+			DefaultErrorMessage = PropertiesValid && _isCheckBox
+				? DEFAULT_CHECKBOX_ERROR_MESSAGE
+				: (_isCheckBoxList || _isRadioButtonList)
+					? DEFAULT_LIST_ERROR_MESSAGE
+					: DEFAULT_ERROR_MESSAGE;
 			base.OnInit(e);
 		}
 		/// <summary>
@@ -104,6 +110,9 @@ namespace Dado.Validators
 					String.Format("Unable to find control id '{0}' referenced by the '{1}' property of '{2}'.", name, propertyName, ID)
 				);
 
+			// Add Validation for CheckBox
+			if (_isCheckBox = (c is WebControls.CheckBox && !(c is WebControls.RadioButton))) return;
+
 			// Add Validation for CheckBoxList
 			if (_isCheckBoxList = c is WebControls.CheckBoxList) return;
 
@@ -130,7 +139,13 @@ namespace Dado.Validators
 
 				AddExpandoAttribute(expandoAttributeWriter, id, "evaluationfunction", "RequiredFieldValidatorEvaluateIsValid", false);
 				AddExpandoAttribute(expandoAttributeWriter, id, "initialvalue", InitialValue);
-				AddExpandoAttribute(expandoAttributeWriter, id, "ischeckboxlist", _isCheckBoxList ? "true" : "false");
+				AddExpandoAttribute(expandoAttributeWriter, id, "validatefor",
+					_isCheckBox
+						? "checkbox"
+						: _isCheckBoxList
+							? "checkboxlist"
+							: "default"
+				);
 			}
 		}
 		/// <summary>
@@ -142,12 +157,16 @@ namespace Dado.Validators
 			string controlValue = GetControlValidationValue(ControlToValidate);
 			if (controlValue == null) {
 
-				// Provide Validation for CheckBoxList. Value check isn't provided by JavaScript and can't be provide.
-				if (_isCheckBoxList) {
+				// Provide Validation for CheckBox.
+				if (_isCheckBox) {
+					return ((WebControls.CheckBox)NamingContainer.FindControl(ControlToValidate)).Checked;
+				}
+				// Provide Validation for CheckBoxList.
+				else if (_isCheckBoxList) {
 					WebControls.CheckBoxList c = (WebControls.CheckBoxList)NamingContainer.FindControl(ControlToValidate);
 
 					foreach (WebControls.ListItem item in c.Items)
-						if (item.Selected && !item.Value.Trim().Equals(InitialValue.Trim()))
+						if (item.Selected)
 							return true;
 
 					return false;
