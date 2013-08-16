@@ -22,10 +22,15 @@ namespace Web
 			{
 				Page.Validate("vlgSubmit");
 				if (Page.IsValid) {
+					litTest.Text += "<p>";
+					litTest.Text += "vldPhoneNumber.ValidatedPhoneNumber: " + vldPhoneNumber.ValidatedPhoneNumber;
 					litTest.Text += "<br />";
-					litTest.Text += vldPhoneNumber.ValidatedPhoneNumber;
+					litTest.Text += "vldPhoneNumber.ValidatedExtension: " + vldPhoneNumber.ValidatedExtension;
 					litTest.Text += "<br />";
-					litTest.Text += vldPhoneNumber.ValidatedExtension;
+					litTest.Text += "cblCheckBoxList.SelectedValue: " + cblCheckBoxList.SelectedValue;
+					litTest.Text += "<br />";
+					litTest.Text += "rblRadioButtonList.SelectedValue: " + rblRadioButtonList.SelectedValue;
+					litTest.Text += "</p>";
 				}
 			};
 

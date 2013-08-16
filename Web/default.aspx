@@ -63,7 +63,7 @@
 			<tr>
 				<th valign="top" align="right">Phone Validator:</th>
 				<td valign="top">
-					<asp:TextBox ID="txtPhoneNumber" runat="server" Text="(555) 896-4571" />
+					<asp:TextBox ID="txtPhoneNumber" runat="server" Text="(555) 896-4571 x345" />
 					<Dado:PhoneValidator ID="vldPhoneNumber" runat="server" ControlToValidate="txtPhoneNumber" ValidationGroup="vlgSubmit" AllowExtension="true" />
 				</td>
 				<th valign="top" align="right"></th>
@@ -103,6 +103,28 @@
 				<td valign="top">
 					<asp:TextBox ID="txtUri" runat="server" />
 					<Dado:UriValidator runat="server" ControlToValidate="txtUri" ValidationGroup="vlgSubmit" Kind="Absolute" TryToFix="true" />
+				</td>
+			</tr>
+			<tr>
+				<th valign="top" align="right">Checkbox List:</th>
+				<td valign="top">
+					<asp:CheckBoxList ID="cblCheckBoxList" runat="server" RepeatLayout="Flow">
+						<asp:ListItem Text="Check Box (empty)" Value="" />
+						<asp:ListItem Text="Check Box 1" Value="1" />
+						<asp:ListItem Text="Check Box 2" Value="2" />
+						<asp:ListItem Text="Check Box 3" Value="3" />
+					</asp:CheckBoxList>
+					<Dado:RequiredFieldValidator runat="server" ControlToValidate="cblCheckBoxList" ValidationGroup="vlgSubmit" />
+				</td>
+				<th valign="top" align="right">Radio Button List:</th>
+				<td valign="top">
+					<asp:RadioButtonList ID="rblRadioButtonList" runat="server" RepeatLayout="Flow">
+						<asp:ListItem Text="Radio Button (empty)" Value="" />
+						<asp:ListItem Text="Radio Button 1" Value="1" />
+						<asp:ListItem Text="Radio Button 2" Value="2" />
+						<asp:ListItem Text="Radio Button 3" Value="3" />
+					</asp:RadioButtonList>
+					<Dado:RequiredFieldValidator runat="server" ControlToValidate="rblRadioButtonList" ValidationGroup="vlgSubmit" />
 				</td>
 			</tr>
 		</table>

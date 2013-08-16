@@ -38,7 +38,7 @@ using System.Web.UI;
 //
 //			<major>.<minor>.<bugfix>.<devlopment>
 //
-[assembly: AssemblyVersion("0.6.0.0")]
+[assembly: AssemblyVersion("0.7.0.0")]
 
 [assembly: WebResource("Dado.js.validation.dev.js", "text/javascript")]
 [assembly: WebResource("Dado.js.validation.min.js", "text/javascript")]

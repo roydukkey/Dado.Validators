@@ -89,6 +89,24 @@ function TypeValidatorEvaluateIsValid(val) { var v = ValidatorGetValue(val.contr
 	}
 }
 
+function RequiredFieldValidatorEvaluateIsValid(val) {
+	if(val.ischeckboxlist === "false") {
+		return ValidatorTrim(ValidatorGetValue(val.controltovalidate)) != ValidatorTrim(val.initialvalue);
+	}
+	// Validate for Checkbox and Radio Lists
+	else {
+		var list = document.getElementById(val.controltovalidate)
+			, inputs = list.getElementsByTagName("input")
+			, i = 0;
+
+		for (; i < inputs.length;)
+			if (inputs[i++].checked)
+				return true;
+
+		return false;
+	}
+}
+
 function ValidateOnLoad() {
 	Page_InvalidControlToBeFocused = null;
 	if (typeof(OnLoad_Validators) == "undefined") return true;

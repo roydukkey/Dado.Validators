@@ -11,6 +11,7 @@ namespace Dado.Validators
 	using System.Diagnostics;
 	using System.Drawing;
 	using System.Web.UI;
+	using WebControls = System.Web.UI.WebControls;
 
 	/// <summary>
 	///		Makes the associated input control a required field.
@@ -24,6 +25,9 @@ namespace Dado.Validators
 		#region Fields
 
 		private const string DEFAULT_ERROR_MESSAGE = "Please enter a value.";
+		private const string DEFAULT_LIST_ERROR_MESSAGE = "Please select a option.";
+		private bool _isCheckBoxList = false;
+		private bool _isRadioButtonList = false;
 
 		#endregion Fields
 
@@ -65,8 +69,53 @@ namespace Dado.Validators
 		/// <param name="e">A <see cref='System.EventArgs'/> that contains the event data.</param>
 		protected override void OnInit(EventArgs e)
 		{
-			DefaultErrorMessage = DEFAULT_ERROR_MESSAGE;
+			DefaultErrorMessage = PropertiesValid && (_isCheckBoxList || _isRadioButtonList) ? DEFAULT_LIST_ERROR_MESSAGE : DEFAULT_ERROR_MESSAGE;
 			base.OnInit(e);
+		}
+		/// <summary>
+		///		Determines whether the control specified by the ControlToValidate property is a valid control.
+		/// </summary>
+		/// <returns>true if the control specified by ControlToValidate is a valid control; otherwise, false.</returns>
+		protected override bool ControlPropertiesValid()
+		{
+			// Check for blank control to validate 
+			string controlToValidate = ControlToValidate;
+			if (controlToValidate.Length == 0)
+				throw new Exception(
+					String.Format("The {0} property of '{1}' cannot be blank.", "ControlToValidate", ID)
+				);
+
+			// Check that the property points to a valid control. Will throw and exception if not found 
+			CheckControlValidationProperty(controlToValidate, "ControlToValidate");
+
+			return true;
+		}
+		/// <summary>
+		///		Verifies whether the specified control is on the page and contains validation properties.
+		/// </summary>
+		/// <param name="name">The control to verify.</param>
+		/// <param name="propertyName">Additional text to describe the source of the exception, if an exception is thrown from using this method.</param>
+		new protected void CheckControlValidationProperty(string name, string propertyName)
+		{
+			// get the control using the relative name
+			Control c = NamingContainer.FindControl(name);
+			if (c == null)
+				throw new Exception(
+					String.Format("Unable to find control id '{0}' referenced by the '{1}' property of '{2}'.", name, propertyName, ID)
+				);
+
+			// Add Validation for CheckBoxList
+			if (_isCheckBoxList = c is WebControls.CheckBoxList) return;
+
+			// Allows Proper Default Error Message
+			_isRadioButtonList = c is WebControls.RadioButtonList;
+
+			// get its validation property 
+			PropertyDescriptor prop = GetValidationProperty(c);
+			if (prop == null)
+				throw new Exception(
+					String.Format("Control '{0}' referenced by the {1} property of '{2}' cannot be validated.", name, propertyName, ID)
+				);
 		}
 		/// <summary>
 		///		Adds the HTML attributes and styles that need to be rendered for the control to the specified <see cref='System.Web.UI.HtmlTextWriter'/> object.
@@ -78,8 +127,10 @@ namespace Dado.Validators
 			if (RenderUplevel) {
 				string id = ClientID;
 				HtmlTextWriter expandoAttributeWriter = (EnableLegacyRendering) ? writer : null;
+
 				AddExpandoAttribute(expandoAttributeWriter, id, "evaluationfunction", "RequiredFieldValidatorEvaluateIsValid", false);
 				AddExpandoAttribute(expandoAttributeWriter, id, "initialvalue", InitialValue);
+				AddExpandoAttribute(expandoAttributeWriter, id, "ischeckboxlist", _isCheckBoxList ? "true" : "false");
 			}
 		}
 		/// <summary>
@@ -88,9 +139,21 @@ namespace Dado.Validators
 		/// <returns>true if the value in the input control is valid; otherwise, false.</returns>
 		protected override bool EvaluateIsValid()
 		{
-			// Get the control value, return true if it is not found 
 			string controlValue = GetControlValidationValue(ControlToValidate);
 			if (controlValue == null) {
+
+				// Provide Validation for CheckBoxList. Value check isn't provided by JavaScript and can't be provide.
+				if (_isCheckBoxList) {
+					WebControls.CheckBoxList c = (WebControls.CheckBoxList)NamingContainer.FindControl(ControlToValidate);
+
+					foreach (WebControls.ListItem item in c.Items)
+						if (item.Selected && !item.Value.Trim().Equals(InitialValue.Trim()))
+							return true;
+
+					return false;
+				}
+
+				// Get the control value, return true if it is not found
 				Debug.Fail("Should have been caught by PropertiesValid check");
 				return true;
 			}
