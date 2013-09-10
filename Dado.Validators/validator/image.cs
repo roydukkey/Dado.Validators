@@ -29,7 +29,7 @@ namespace Dado.Validators
 		private const string MaximumWidthErrorMessage_Default = "The image width must not be more than {0}px.";
 		private const string ExactHeightErrorMessage_Default = "The image height must be {0}px.";
 		private const string MinimumHeightErrorMessage_Default = "The image height must not be less than {0}px.";
-		private const string MaximumHeightErrorMessage_Default = "The image height must not be more than [n]px.";
+		private const string MaximumHeightErrorMessage_Default = "The image height must not be more than {0}px.";
 
 		#endregion Fields
 
