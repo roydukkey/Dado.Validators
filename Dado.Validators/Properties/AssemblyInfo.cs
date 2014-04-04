@@ -1,5 +1,5 @@
 ﻿//---------------------------------------------------------------------------------
-// Dado Validators, Copyright 2013 roydukkey.
+// Dado Validators, Copyright 2014 roydukkey.
 // Dual licensed under the MIT (http://www.roydukkey.com/mit) and
 // GPL Version 2 (http://www.roydukkey.com/gpl) licenses.
 //---------------------------------------------------------------------------------
@@ -12,12 +12,12 @@ using System.Web.UI;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Dado Validators")]
-[assembly: AssemblyDescription("An healthy alternative to the ASP.NET validation controls.")]
+[assembly: AssemblyTitle("An healthy alternative to the ASP.NET and Mono validation controls.")]
+[assembly: AssemblyDescription("An healthy alternative to the ASP.NET and Mono validation controls.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("roydukkey")]
-[assembly: AssemblyProduct("Dado Validators")]
-[assembly: AssemblyCopyright("Copyright © roydukkey, Inc. 2013")]
+[assembly: AssemblyProduct("Dado.Validators")]
+[assembly: AssemblyCopyright("Copyright © roydukkey, Inc. 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -38,7 +38,7 @@ using System.Web.UI;
 //
 //			<major>.<minor>.<bugfix>.<devlopment>
 //
-[assembly: AssemblyVersion("0.7.1")]
+[assembly: AssemblyVersion("1.0.0")]
 
 [assembly: WebResource("Dado.js.validation.dev.js", "text/javascript")]
 [assembly: WebResource("Dado.js.validation.min.js", "text/javascript")]

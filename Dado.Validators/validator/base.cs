@@ -1,5 +1,5 @@
 ﻿//---------------------------------------------------------------------------------
-// Dado Validators, Copyright 2013 roydukkey.
+// Dado Validators, Copyright 2014 roydukkey.
 // Dual licensed under the MIT (http://www.roydukkey.com/mit) and
 // GPL Version 2 (http://www.roydukkey.com/gpl) licenses.
 //---------------------------------------------------------------------------------
@@ -11,10 +11,12 @@ namespace Dado.Validators
 {
 	using System;
 	using System.ComponentModel;
+	using System.Configuration;
 	using System.Diagnostics;
 	using System.Drawing;
 	using System.Reflection;
 	using System.Web.Compilation;
+	using System.Web.Configuration;
 	using WebControls = System.Web.UI.WebControls;
 
 	/// <summary>
@@ -29,16 +31,19 @@ namespace Dado.Validators
 		#region Fields
 
 		private const string VALIDATOR_FILE_NAME = "Dado.js.validation.min.js";
+    private const string VALIDATOR_INITIALIZE_SCRIPT = "DadoValidation_Initialize({0});";
+    private const string VALIDATOR_SCRIPT_KEY = "Dado-Validators.Initialize";
 		private const string DEFAULT_ERROR_MESSAGE = "Please enter a correct value.";
 
-		private const string _cssClass = "validator";
-		private const string _cssClassInvalid = "invalid";
+		private const string CSS_CLASS = "validator";
+		private const string CSS_CLASS_INVALID = "invalid";
 		private string _defaultErrorMessage = DEFAULT_ERROR_MESSAGE;
-    private bool wasForeColorSet = false;
+		private bool _isErrorMessageSet;
 
 		private bool preRenderCalled;
-		private static bool _partialRenderingChecked;
-		private static bool _isPartialRenderingEnabled;
+		private static bool? _isPartialRenderingEnabled;
+		private bool? _enableLegacyRendering;
+		private string _webFormScriptReference;
 
 		#endregion Fields
 
@@ -49,16 +54,13 @@ namespace Dado.Validators
 		/// </summary>
 		[
 			Category("Appearance"),
-			DefaultValue(_cssClass),
+			DefaultValue(CSS_CLASS),
 			Description("Gets or sets the CSS class rendered by the Web control."),
 			CssClassProperty()
 		]
 		public override string CssClass
 		{
-			get {
-				string o = base.CssClass;
-				return o == "" ? _cssClass : o;
-			}
+			get { return base.CssClass; }
 			set { base.CssClass = value; }
 		}
 		/// <summary>
@@ -67,12 +69,13 @@ namespace Dado.Validators
 		[
 			Category("Appearance"),
 			Themeable(false),
-			DefaultValue(_cssClassInvalid),
-			Description("Gets or sets the CSS class rendered by the Web control when it is not valid.")
+			DefaultValue(CSS_CLASS_INVALID),
+			Description("Gets or sets the CSS class rendered by the Web control when it is not valid."),
+			CssClassProperty()
 		]
 		public string CssClassInvalid
 		{
-			get { return (string) (ViewState["CssClassInvalid"] ?? _cssClassInvalid); }
+			get { return (string)(ViewState["CssClassInvalid"] ?? CSS_CLASS_INVALID); }
 			set { ViewState["CssClassInvalid"] = value; }
 		}
 		/// <summary>
@@ -86,11 +89,8 @@ namespace Dado.Validators
 		]
 		new public virtual string ErrorMessage
 		{
-			get {
-				string o = base.ErrorMessage;
-				return String.IsNullOrEmpty(o) ? DefaultErrorMessage : o;
-			}
-			set { base.ErrorMessage = value; }
+			get { return _isErrorMessageSet ? base.ErrorMessage : DefaultErrorMessage; }
+			set { _isErrorMessageSet = true; base.ErrorMessage = value; }
 		}
 		/// <summary>
 		///		Gets or sets a value indicating whether client-side validation is enabled.
@@ -111,18 +111,15 @@ namespace Dado.Validators
 		///		Gets or sets the text color of validation messages.
 		/// </summary>
 		[
-			Category("Behavior"),
+			Category("Appearance"),
 			Themeable(false),
       DefaultValue(typeof(Color), "Empty"),
-			Description("")
+			Description("Gets or sets the text color of validation messages.")
 		]
 		public override Color ForeColor
 		{
 			get { return base.ForeColor; }
-			set {
-				wasForeColorSet = true;
-				base.ForeColor = value;
-			}
+			set { base.ForeColor = value; }
 		}
 		
 		#endregion Control Attributes
@@ -135,13 +132,29 @@ namespace Dado.Validators
 		protected bool EnableLegacyRendering
 		{
 			get {
-				return (bool)typeof(System.Web.UI.WebControls.BaseValidator).GetProperty("EnableLegacyRendering", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(this, null);
+				if (!_enableLegacyRendering.HasValue) {
+					XhtmlConformanceSection xhtml = (XhtmlConformanceSection)WebConfigurationManager.GetSection("system.web/xhtmlConformance");
+
+					if (xhtml != null && xhtml.ElementInformation.IsPresent) {
+						_enableLegacyRendering = xhtml.Mode == XhtmlConformanceMode.Legacy;
+					}
+
+					xhtml = (XhtmlConformanceSection)ConfigurationManager.OpenMachineConfiguration().GetSection("system.web/xhtmlConformance");
+
+					if (xhtml != null && xhtml.ElementInformation.IsPresent) {
+						_enableLegacyRendering = xhtml.Mode == XhtmlConformanceMode.Legacy;
+					}
+
+					_enableLegacyRendering = false;
+				}
+
+				return _enableLegacyRendering.Value;
 			}
 		}
 		/// <summary>
 		///		Gets or sets the text for the default error message.
 		/// </summary>
-		protected string DefaultErrorMessage
+		protected virtual string DefaultErrorMessage
 		{
 			get { return _defaultErrorMessage; }
 			set { _defaultErrorMessage = value; }
@@ -149,45 +162,80 @@ namespace Dado.Validators
 
 		#endregion Protected Properties
 
-		#region Protected Methods
+		#region Private Properties
 
 		/// <summary>
-		///		Registers the validator on the page.
+		///		Gets or sets the text for the reference to the form's script namespace.
 		/// </summary>
-		/// <param name="e">A <see cref='System.EventArgs'/> that contains the event data.</param>
-		protected override void OnInit(EventArgs e)
+		private string WebFormScriptReference
 		{
-			if (!wasForeColorSet) ForeColor = Color.Empty;
-			base.OnInit(e);
+			get {
+				if (_webFormScriptReference == null) {
+					Type type = typeof(Page);
+
+					if (type == null) {
+						_webFormScriptReference = "window";
+					}
+					else {
+						PropertyInfo property = type.GetProperty("WebFormScriptReference", BindingFlags.Instance | BindingFlags.NonPublic);
+						if (property == null)
+							_webFormScriptReference = "window";
+						else
+							_webFormScriptReference = (string)property.GetValue(Page, null);
+					}
+				}
+
+				return _webFormScriptReference;
+			}
 		}
+
+		#endregion Private Properties
+
+		#region Constructor
+
+		/// <summary>
+		///		Initializes a new instance of the BaseValidator class.
+		/// </summary>
+		protected BaseValidator() : base()
+		{
+			ForeColor = Color.Empty;
+			DefaultErrorMessage = DEFAULT_ERROR_MESSAGE;
+			CssClass = CSS_CLASS;
+		}
+
+		#endregion Constructor
+
+		#region Protected Methods
+
 		/// <summary>
 		///		Checks the client brower and configures the validator for compatibility prior to rendering.
 		/// </summary>
 		/// <param name="e">A <see cref='System.EventArgs'/> that contains the event data.</param>
 		protected override void OnPreRender(EventArgs e)
 		{
-			// Ensure default class is added
-			CssClass = CssClass;
-
-			base.OnPreRender(e);
-			preRenderCalled = true;
-
 			// Register override scripts
-			if (RenderUplevel)
-				RegisterValidatorOverrideScripts();
-		}
-		/// <summary>
-		///		Registers override code on the page for client-side validation.
-		/// </summary>
-		protected void RegisterValidatorOverrideScripts()
-		{
-			// Cannot use the overloads of Register* that take a Control, since these methods only work with AJAX 3.5,
-			// and we need to support Validators in AJAX 1.0 (Windows OS Bugs 2015831). 
-			if (!IsPartialRenderingSupported(Page))
-				Page.ClientScript.RegisterClientScriptResource(typeof(BaseValidator), VALIDATOR_FILE_NAME);
-			else
-				// Register the original validation scripts but through the new ScriptManager APIs 
-				ValidatorCompatibilityHelper.RegisterClientScriptResource(this, typeof(BaseValidator), VALIDATOR_FILE_NAME);
+			if (DetermineRenderUplevel()) {
+				ScriptManager manager = ScriptManager.GetCurrent(Page);
+
+				if (manager != null) {
+					ScriptManager.RegisterClientScriptBlock(this, typeof(BaseValidator), VALIDATOR_SCRIPT_KEY, String.Format(VALIDATOR_INITIALIZE_SCRIPT, WebFormScriptReference), true);
+
+					base.OnPreRender(e);
+					preRenderCalled = true;
+
+					ScriptManager.RegisterClientScriptResource(this, typeof(BaseValidator), VALIDATOR_FILE_NAME);
+				}
+				else if(!Page.ClientScript.IsClientScriptBlockRegistered(typeof(BaseValidator), VALIDATOR_SCRIPT_KEY)) {
+					//throw new Exception("We Are Here! B");
+
+					Page.ClientScript.RegisterStartupScript(typeof(BaseValidator), VALIDATOR_SCRIPT_KEY, String.Format(VALIDATOR_INITIALIZE_SCRIPT, WebFormScriptReference), true);
+					
+					base.OnPreRender(e);
+					preRenderCalled = true;
+
+					Page.ClientScript.RegisterClientScriptResource(typeof(BaseValidator), VALIDATOR_FILE_NAME);
+				}
+			}
 		}
 		/// <summary>
 		///		Displays the control on the client.
@@ -205,7 +253,8 @@ namespace Dado.Validators
 			else shouldBeVisible = Enabled && !IsValid;
 
 			// If server-side validation fails, add invalid class
-			if (shouldBeVisible) CssClass += " " + CssClassInvalid;
+			if (!Enabled) CssClass += " " + "aspNetDisabled";
+			else if (!IsValid) CssClass += " " + CssClassInvalid;
 
 			// No point rendering if we have errors 
 			if (!PropertiesValid) return;
@@ -256,7 +305,6 @@ namespace Dado.Validators
 		{
 			base.AddAttributesToRender(writer);
 			if (RenderUplevel) {
-
 				string id = ClientID;
 				HtmlTextWriter expandoAttributeWriter = (EnableLegacyRendering) ? writer : null;
 
@@ -310,17 +358,13 @@ namespace Dado.Validators
 				Debug.Assert(control != null);
 				Page page = control.Page;
 				Debug.Assert(page != null);
+				ScriptManager manager = ScriptManager.GetCurrent(page);
 
-				// Cannot use the overload of RegisterExpandoAttribute that takes a Control, since that method only works with AJAX 3.5, 
-				// and we need to support Validators in AJAX 1.0 (Windows OS Bugs 2015831).
-				if (!IsPartialRenderingSupported(page)) {
-					// Fall back to ASP.NET 2.0 behavior
-					page.ClientScript.RegisterExpandoAttribute(controlId, attributeName, attributeValue, encode);
+				if (manager != null) {
+					ScriptManager.RegisterExpandoAttribute(control, controlId, attributeName, attributeValue, encode);
 				}
 				else {
-					// At last Partial Rendering support 
-					// ScriptManager exists, so call its instance' method for script registration
-					ValidatorCompatibilityHelper.RegisterExpandoAttribute(control, controlId, attributeName, attributeValue, encode);
+					page.ClientScript.RegisterExpandoAttribute(controlId, attributeName, attributeValue, encode);
 				}
 			}
 		}
@@ -331,21 +375,12 @@ namespace Dado.Validators
 		/// <returns></returns>
 		internal static bool IsPartialRenderingSupported(Page page)
 		{
-			if (!_partialRenderingChecked) {
-				Type scriptManagerType = BuildManager.GetType("System.Web.UI.ScriptManager", false);
-				if (scriptManagerType != null) {
-					object obj2 = page.Items[scriptManagerType];
-					if (obj2 != null) {
-						PropertyInfo property = scriptManagerType.GetProperty("SupportsPartialRendering");
-						if (property != null) {
-							object obj3 = property.GetValue(obj2, null);
-							_isPartialRenderingEnabled = (bool)obj3;
-						}
-					}
-				}
-				_partialRenderingChecked = true;
+			if (!_isPartialRenderingEnabled.HasValue) {
+				ScriptManager manager = ScriptManager.GetCurrent(page);
+				_isPartialRenderingEnabled = manager != null && manager.SupportsPartialRendering;
 			}
-			return _isPartialRenderingEnabled;
+
+			return _isPartialRenderingEnabled.Value;
 		}
 
 		#endregion Internal Methods

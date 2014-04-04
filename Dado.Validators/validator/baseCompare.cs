@@ -1,5 +1,5 @@
 ﻿//---------------------------------------------------------------------------------
-// Dado Validators, Copyright 2013 roydukkey.
+// Dado Validators, Copyright 2014 roydukkey.
 // Dual licensed under the MIT (http://www.roydukkey.com/mit) and
 // GPL Version 2 (http://www.roydukkey.com/gpl) licenses.
 //---------------------------------------------------------------------------------
@@ -327,9 +327,9 @@ namespace Dado.Validators
 		{
 			// We don't do client-side validation for dates with non gregorian calendars
 			return
-				Type == WebControls.ValidationDataType.Date && DateTimeFormatInfo.CurrentInfo.Calendar.GetType() != typeof(GregorianCalendar) ?
-				false :
-				base.DetermineRenderUplevel();
+				Type == WebControls.ValidationDataType.Date && DateTimeFormatInfo.CurrentInfo.Calendar.GetType() != typeof(GregorianCalendar)
+					? false
+					: base.DetermineRenderUplevel();
 		}
 
 		#endregion Protected Methods
@@ -374,10 +374,10 @@ namespace Dado.Validators
 			object value;
 			Convert(valueInString, type, true, out value);
 			return
-				value is DateTime ?
-				// For Date type we explicitly want the date portion only
-				((DateTime)value).ToShortDateString() :
-				System.Convert.ToString(value, CultureInfo.CurrentCulture);
+				value is DateTime
+					// For Date type we explicitly want the date portion only
+					? ((DateTime)value).ToShortDateString() 
+					: System.Convert.ToString(value, CultureInfo.CurrentCulture);
 		}
 
 		#endregion Internal Methods

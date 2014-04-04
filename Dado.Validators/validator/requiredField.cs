@@ -1,5 +1,5 @@
 ﻿//---------------------------------------------------------------------------------
-// Dado Validators, Copyright 2013 roydukkey.
+// Dado Validators, Copyright 2014 roydukkey.
 // Dual licensed under the MIT (http://www.roydukkey.com/mit) and
 // GPL Version 2 (http://www.roydukkey.com/gpl) licenses.
 //---------------------------------------------------------------------------------
@@ -27,9 +27,11 @@ namespace Dado.Validators
 		private const string DEFAULT_ERROR_MESSAGE = "Please enter a value.";
 		private const string DEFAULT_CHECKBOX_ERROR_MESSAGE = "You must select this option.";
 		private const string DEFAULT_LIST_ERROR_MESSAGE = "Please select an option.";
+		private const string DEFAULT_FILE_ERROR_MESSAGE = "Please select a file.";
 		private bool _isCheckBox = false;
 		private bool _isCheckBoxList = false;
 		private bool _isRadioButtonList = false;
+		private bool _isFileUpload = false;
 
 		#endregion Fields
 
@@ -75,7 +77,9 @@ namespace Dado.Validators
 				? DEFAULT_CHECKBOX_ERROR_MESSAGE
 				: (_isCheckBoxList || _isRadioButtonList)
 					? DEFAULT_LIST_ERROR_MESSAGE
-					: DEFAULT_ERROR_MESSAGE;
+					: _isFileUpload
+						? DEFAULT_FILE_ERROR_MESSAGE
+						: DEFAULT_ERROR_MESSAGE;
 			base.OnInit(e);
 		}
 		/// <summary>
@@ -114,10 +118,11 @@ namespace Dado.Validators
 			if (_isCheckBox = (c is WebControls.CheckBox && !(c is WebControls.RadioButton))) return;
 
 			// Add Validation for CheckBoxList
-			if (_isCheckBoxList = c is WebControls.CheckBoxList) return;
+			else if (_isCheckBoxList = c is WebControls.CheckBoxList) return;
 
 			// Allows Proper Default Error Message
-			_isRadioButtonList = c is WebControls.RadioButtonList;
+			else if (_isRadioButtonList = c is WebControls.RadioButtonList) { }
+			else { _isFileUpload = c is WebControls.FileUpload; }
 
 			// get its validation property 
 			PropertyDescriptor prop = GetValidationProperty(c);

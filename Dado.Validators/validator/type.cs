@@ -1,5 +1,5 @@
 ﻿//---------------------------------------------------------------------------------
-// Dado Validators, Copyright 2013 roydukkey.
+// Dado Validators, Copyright 2014 roydukkey.
 // Dual licensed under the MIT (http://www.roydukkey.com/mit) and
 // GPL Version 2 (http://www.roydukkey.com/gpl) licenses.
 //---------------------------------------------------------------------------------
@@ -85,7 +85,7 @@ namespace Dado.Validators
 		]
 		public override string ErrorMessage
 		{
-			get { return String.Format(base.ErrorMessage ?? DEFAULT_ERROR_MESSAGE, Type); }
+			get { return String.Format(base.ErrorMessage ?? DefaultErrorMessage, Type); }
 			set { base.ErrorMessage = value; }
 		}
 		/// <summary>
@@ -119,17 +119,20 @@ namespace Dado.Validators
 
 		#endregion Control Attributes
 
-		#region Protected Methods
+		#region Constructor
 
 		/// <summary>
-		///		Registers the validator on the page.
+		///		Initializes a new instance of the TypeValidator class.
 		/// </summary>
-		/// <param name="e">A <see cref='System.EventArgs'/> that contains the event data.</param>
-		protected override void OnInit(EventArgs e)
+		public TypeValidator() : base()
 		{
 			DefaultErrorMessage = DEFAULT_ERROR_MESSAGE;
-			base.OnInit(e);
 		}
+
+		#endregion Constructor
+
+		#region Protected Methods
+
 		/// <summary>
 		///		Adds the HTML attributes and styles that need to be rendered for the control to the specified <see cref='System.Web.UI.HtmlTextWriter'/> object.
 		/// </summary>

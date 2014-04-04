@@ -1,5 +1,5 @@
 ﻿<%-----------------------------------------------------------------------------------
-// Dado Validators, Copyright 2013 roydukkey.
+// Dado Validators, Copyright 2014 roydukkey.
 // Dual licensed under the MIT (http://www.roydukkey.com/mit) and
 // GPL Version 2 (http://www.roydukkey.com/gpl) licenses.
 -----------------------------------------------------------------------------------%>
@@ -73,12 +73,13 @@
 				<th valign="top" align="right">File Type Validator:</th>
 				<td valign="top">
 					<asp:FileUpload ID="fupFileType" runat="server" />
-					<Dado:FileTypeValidator runat="server" ControlToValidate="fupFileType" ValidationGroup="vlgSubmit" FileExtensions=".txt, .jpg, .jpeg" Operator="Negative" />
+					<Dado:FileTypeValidator runat="server" ControlToValidate="fupFileType" ValidationGroup="vlgSubmit" FileExtensions=".txt, .jpg, .jpeg" Operator="Positive" />
 				</td>
 				<th valign="top" align="right">Image Validator:</th>
 				<td valign="top">
 					<asp:FileUpload ID="fupImage" runat="server" />
 					<Dado:ImageValidator runat="server" ControlToValidate="fupImage" ValidationGroup="vlgSubmit" ExactWidth="200" ExactHeight="250" />
+					<Dado:RequiredFieldValidator runat="server" ControlToValidate="fupImage" ValidationGroup="vlgSubmit" />
 				</td>
 			</tr>
 			<tr>

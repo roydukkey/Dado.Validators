@@ -1,5 +1,5 @@
 ﻿//---------------------------------------------------------------------------------
-// Dado Validators, Copyright 2013 roydukkey.
+// Dado Validators, Copyright 2014 roydukkey.
 // Dual licensed under the MIT (http://www.roydukkey.com/mit) and
 // GPL Version 2 (http://www.roydukkey.com/gpl) licenses.
 //---------------------------------------------------------------------------------
@@ -60,18 +60,16 @@ namespace Dado.Validators
 
 		#endregion Control Attributes
 
-		#region Protected Methods
+		#region Constructors
 
 		/// <summary>
-		///		Registers the validator on the page.
+		///		Initializes a new instance of the EmailValidator class.
 		/// </summary>
-		/// <param name="e">A <see cref='System.EventArgs'/> that contains the event data.</param>
-		protected override void OnInit(EventArgs e)
+		public EmailValidator() : base()
 		{
 			DefaultErrorMessage = DEFAULT_ERROR_MESSAGE;
-			base.OnInit(e);
 		}
 
-		#endregion Protected Methods
+		#endregion Constructors
 	}
 }

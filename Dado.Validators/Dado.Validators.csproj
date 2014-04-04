@@ -12,6 +12,8 @@
     <AssemblyName>Dado.Validators</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <ReleaseVersion>0.0.0.2</ReleaseVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,14 +32,17 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Dado.Validators.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Web.Extensions" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="extension\string.cs" />
@@ -50,7 +55,6 @@
     <Compile Include="validator\custom.cs" />
     <Compile Include="validator\email.cs" />
     <Compile Include="validator\fileType.cs" />
-    <Compile Include="validator\helper\validatorCompatibility.cs" />
     <Compile Include="validator\image.cs" />
     <Compile Include="validator\length.cs" />
     <Compile Include="validator\phone.cs" />
@@ -61,12 +65,6 @@
     <Compile Include="validator\uri.cs" />
     <Compile Include="validator\usdCurrency.cs" />
     <Compile Include="validator\zipCode.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="js\validation.min.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="js\validation.dev.js" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="image\range.bmp" />
@@ -98,6 +96,13 @@
   <ItemGroup>
     <EmbeddedResource Include="image\custom.bmp" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="js\validation.dev.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="js\validation.min.js" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

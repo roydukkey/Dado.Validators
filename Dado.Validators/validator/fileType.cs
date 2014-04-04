@@ -1,5 +1,5 @@
 ﻿//---------------------------------------------------------------------------------
-// Dado Validators, Copyright 2013 roydukkey.
+// Dado Validators, Copyright 2014 roydukkey.
 // Dual licensed under the MIT (http://www.roydukkey.com/mit) and
 // GPL Version 2 (http://www.roydukkey.com/gpl) licenses.
 //---------------------------------------------------------------------------------
@@ -85,7 +85,7 @@ namespace Dado.Validators
 		]
 		public override string ErrorMessage
 		{
-			get { return base.ErrorMessage == DefaultErrorMessage ? String.Format(Operator == ValidationFileTypeOperator.Positive ? POSITIVE_DEFAULT_ERROR_MESSAGE : NEGATIVE_DEFAULT_ERROR_MESSAGE, ProcessErrorMessage()) : base.ErrorMessage; }
+			get { return base.ErrorMessage; }
 			set { base.ErrorMessage = value; }
 		}
 		/// <summary>
@@ -124,6 +124,19 @@ namespace Dado.Validators
 		}
 
 		#endregion Control Attributes
+
+		#region Protected Properties
+
+		/// <summary>
+		///		Gets or sets the text for the default error message.
+		/// </summary>
+		protected override string DefaultErrorMessage
+		{
+			get { return String.Format(Operator == ValidationFileTypeOperator.Positive ? POSITIVE_DEFAULT_ERROR_MESSAGE : NEGATIVE_DEFAULT_ERROR_MESSAGE, ProcessErrorMessage()); }
+			set { base.DefaultErrorMessage = value; }
+		}
+
+		#endregion Protected Properties
 
 		#region Protected Methods
 

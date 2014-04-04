@@ -1,5 +1,5 @@
 ﻿//---------------------------------------------------------------------------------
-// Dado Validators, Copyright 2013 roydukkey.
+// Dado Validators, Copyright 2014 roydukkey.
 // Dual licensed under the MIT (http://www.roydukkey.com/mit) and
 // GPL Version 2 (http://www.roydukkey.com/gpl) licenses.
 //---------------------------------------------------------------------------------
@@ -49,7 +49,7 @@ namespace Dado.Validators
 		/// </summary>
 		new private bool EnableClientScript
 		{
-			get { return false; }
+			get { return base.EnableClientScript; }
 			set { base.EnableClientScript = value; }
 		}
 		/// <summary>
@@ -222,6 +222,18 @@ namespace Dado.Validators
 		}
 
 		#endregion Control Attributes
+
+		#region Constructor
+
+		/// <summary>
+		///		Initializes a new instance of the BaseValidator class.
+		/// </summary>
+		public ImageValidator() : base()
+		{
+			EnableClientScript = false;
+		}
+
+		#endregion Constructor
 
 		#region Protected Methods
 

@@ -1,5 +1,5 @@
 ﻿//---------------------------------------------------------------------------------
-// Dado Validators, Copyright 2013 roydukkey.
+// Dado Validators, Copyright 2014 roydukkey.
 // Dual licensed under the MIT (http://www.roydukkey.com/mit) and
 // GPL Version 2 (http://www.roydukkey.com/gpl) licenses.
 //---------------------------------------------------------------------------------
@@ -86,18 +86,21 @@ namespace Dado.Validators
 
 		#endregion Control Attributes
 
-		#region Protected Methods
+		#region Constructor
 
 		/// <summary>
-		///		Registers the validator on the page.
+		///		Initializes a new instance of the UriValidator class.
 		/// </summary>
-		/// <param name="e">A <see cref='System.EventArgs'/> that contains the event data.</param>
-		protected override void OnInit(EventArgs e)
+		public UriValidator() : base()
 		{
 			DefaultErrorMessage = DEFAULT_ERROR_MESSAGE;
 			EnableClientScript = false;
-			base.OnInit(e);
 		}
+
+		#endregion Constructor
+
+		#region Protected Methods
+
 		/// <summary>
 		///		Called during the validation stage when ASP.NET processes a Web Form.
 		/// </summary>
