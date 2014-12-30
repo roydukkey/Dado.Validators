@@ -1,7 +1,6 @@
 ﻿//---------------------------------------------------------------------------------
-// Dado Validators, Copyright 2014 roydukkey.
-// Dual licensed under the MIT (http://www.roydukkey.com/mit) and
-// GPL Version 2 (http://www.roydukkey.com/gpl) licenses.
+// Dado Validators v1.0.0, Copyright 2014 roydukkey, 2014-04-05 (Sat, 05 April 2014).
+// Released under the GPL Version 3 license (https://github.com/roydukkey/Dado.Validators/raw/master/LICENSE).
 //---------------------------------------------------------------------------------
 
 namespace Dado.Validators
@@ -121,7 +120,7 @@ namespace Dado.Validators
 						AddExpandoAttribute(expandoAttributeWriter, id, "decimalchar", decimalChar);
 
 						string groupChar = info.CurrencyGroupSeparator;
-						// Map non-break space onto regular space for parsing 
+						// Map non-break space onto regular space for parsing
 						if (groupChar[0] == 160)
 							groupChar = " ";
 						AddExpandoAttribute(expandoAttributeWriter, id, "groupchar", groupChar);
@@ -139,9 +138,9 @@ namespace Dado.Validators
 						AddExpandoAttribute(expandoAttributeWriter, id, "dateorder", GetDateElementOrder(), false);
 						AddExpandoAttribute(expandoAttributeWriter, id, "cutoffyear", CutoffYear.ToString(NumberFormatInfo.InvariantInfo), false);
 
-						// VSWhidbey 504553: The changes of this bug make client-side script not 
+						// VSWhidbey 504553: The changes of this bug make client-side script not
 						// using the century attribute anymore, but still generating it for
-						// backward compatibility with Everett pages. 
+						// backward compatibility with Everett pages.
 						int currentYear = DateTime.Today.Year;
 						int century = currentYear - (currentYear % 100);
 						AddExpandoAttribute(expandoAttributeWriter, id, "century", century.ToString(NumberFormatInfo.InvariantInfo), false);
@@ -219,7 +218,7 @@ namespace Dado.Validators
 							if (cultureInvariant)
 								value = ConvertDate(text, "ymd");
 							else {
-								// if the calendar is not gregorian, we should not enable client-side, so just parse it directly: 
+								// if the calendar is not gregorian, we should not enable client-side, so just parse it directly:
 								if (!(DateTimeFormatInfo.CurrentInfo.Calendar.GetType() == typeof(GregorianCalendar))) {
 									value = DateTime.Parse(text, CultureInfo.CurrentCulture);
 									break;
@@ -359,7 +358,7 @@ namespace Dado.Validators
 		internal bool IsInStandardDateFormat(string date)
 		{
 			// VSWhidbey 115454: We identify that date string with only numbers
-			// and specific punctuation separators is in standard date format. 
+			// and specific punctuation separators is in standard date format.
 			const string standardDateExpression = "^\\s*(\\d+)([-/]|\\. ?)(\\d+)\\2(\\d+)\\s*$";
 			return Regex.Match(date, standardDateExpression).Success;
 		}
@@ -376,7 +375,7 @@ namespace Dado.Validators
 			return
 				value is DateTime
 					// For Date type we explicitly want the date portion only
-					? ((DateTime)value).ToShortDateString() 
+					? ((DateTime)value).ToShortDateString()
 					: System.Convert.ToString(value, CultureInfo.CurrentCulture);
 		}
 
@@ -395,7 +394,7 @@ namespace Dado.Validators
 			return groupSizes != null && groupSizes.Length == 1 ? groupSizes[0] : -1;
 		}
 		/// <summary>
-		/// 
+		///
 		/// </summary>
 		/// <param name="text"></param>
 		/// <param name="info"></param>
@@ -405,7 +404,7 @@ namespace Dado.Validators
 			string decimalChar = info.CurrencyDecimalSeparator;
 			string groupChar = info.CurrencyGroupSeparator;
 
-			// VSWhidbey 83165 
+			// VSWhidbey 83165
 			string beginGroupSize, subsequentGroupSize;
 			int groupSize = GetCurrencyGroupSize(info);
 			if (groupSize > 0) {
@@ -415,7 +414,7 @@ namespace Dado.Validators
 			}
 			else beginGroupSize = subsequentGroupSize = "+";
 
-			// Map non-break space onto regular space for parsing 
+			// Map non-break space onto regular space for parsing
 			if (groupChar[0] == 160) groupChar = " ";
 			int digits = info.CurrencyDecimalDigits;
 			bool hasDigits = (digits > 0);
@@ -427,7 +426,7 @@ namespace Dado.Validators
 			Match m = Regex.Match(text, currencyExpression);
 			if (!m.Success) return null;
 
-			// Make sure there are some valid digits 
+			// Make sure there are some valid digits
 			if (m.Groups[2].Length == 0 && hasDigits && m.Groups[5].Length == 0) return null;
 
 			return m.Groups[1].Value
@@ -435,7 +434,7 @@ namespace Dado.Validators
 				+ ((hasDigits && m.Groups[5].Length > 0) ? "." + m.Groups[5].Value : string.Empty);
 		}
 		/// <summary>
-		/// 
+		///
 		/// </summary>
 		/// <param name="text"></param>
 		/// <param name="info"></param>
@@ -443,7 +442,7 @@ namespace Dado.Validators
 		private static string ConvertDouble(string text, NumberFormatInfo info)
 		{
 			// VSWhidbey 83156: If text is empty, it would be default to 0 for
-			// backward compatibility reason. 
+			// backward compatibility reason.
 			if (text.Length == 0) return "0";
 
 			string decimalChar = info.NumberDecimalSeparator;
@@ -452,7 +451,7 @@ namespace Dado.Validators
 			Match m = Regex.Match(text, doubleExpression);
 			if (!m.Success) return null;
 
-			// Make sure there are some valid digits 
+			// Make sure there are some valid digits
 			if (m.Groups[2].Length == 0 && m.Groups[3].Length == 0) return null;
 
 			return m.Groups[1].Value
@@ -460,7 +459,7 @@ namespace Dado.Validators
 				+ ((m.Groups[3].Length > 0) ? "." + m.Groups[3].Value : string.Empty);
 		}
 		/// <summary>
-		///		
+		///
 		/// </summary>
 		/// <param name="text"></param>
 		/// <param name="dateElementOrder"></param>
@@ -483,7 +482,7 @@ namespace Dado.Validators
 			else {
 				if (dateElementOrder == "ymd") return null;
 
-				// also check for the year last format 
+				// also check for the year last format
 				string dateYearLastExpression = "^\\s*(\\d{1,2})([-/]|\\. ?)(\\d{1,2})(?:\\s|\\2)((\\d{4})|(\\d{2}))(?:\\s\u0433\\.|\\.)?\\s*$";
 				m = Regex.Match(text, dateYearLastExpression);
 				if (!m.Success) return null;
@@ -501,7 +500,7 @@ namespace Dado.Validators
 					year = GetFullYear(Int32.Parse(m.Groups[6].Value, CultureInfo.InvariantCulture));
 			}
 			return new DateTime(year, month, day);
-		} 
+		}
 
 		#endregion Private Methods
 	}

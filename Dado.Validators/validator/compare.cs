@@ -1,7 +1,6 @@
 ﻿//---------------------------------------------------------------------------------
-// Dado Validators, Copyright 2014 roydukkey.
-// Dual licensed under the MIT (http://www.roydukkey.com/mit) and
-// GPL Version 2 (http://www.roydukkey.com/gpl) licenses.
+// Dado Validators v1.0.0, Copyright 2014 roydukkey, 2014-04-05 (Sat, 05 April 2014).
+// Released under the GPL Version 3 license (https://github.com/roydukkey/Dado.Validators/raw/master/LICENSE).
 //---------------------------------------------------------------------------------
 
 namespace Dado.Validators
@@ -135,11 +134,11 @@ namespace Dado.Validators
 			string leftText = GetControlValidationValue(ControlToValidate);
 			Debug.Assert(leftText != null, "Should have already caught this!");
 
-			// Special case: if the string is blank, we don't try to validate it. The input should be 
+			// Special case: if the string is blank, we don't try to validate it. The input should be
 			// trimmed for coordination with the RequiredFieldValidator.
 			if (leftText.Trim().Length == 0) return true;
 
-			// VSWhidbey 83168 
+			// VSWhidbey 83168
 			bool convertDate = (Type == WebControls.ValidationDataType.Date && !DetermineRenderUplevel());
 			if (convertDate && !IsInStandardDateFormat(leftText)) leftText = ConvertToShortDateString(leftText);
 
@@ -166,7 +165,7 @@ namespace Dado.Validators
 		#region Internal Methods
 
 		/// <summary>
-		///		
+		///
 		/// </summary>
 		/// <param name="s1"></param>
 		/// <param name="s2"></param>

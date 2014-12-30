@@ -1,7 +1,6 @@
 ﻿//---------------------------------------------------------------------------------
-// Dado Validators, Copyright 2014 roydukkey.
-// Dual licensed under the MIT (http://www.roydukkey.com/mit) and
-// GPL Version 2 (http://www.roydukkey.com/gpl) licenses.
+// Dado Validators v1.0.0, Copyright 2014 roydukkey, 2014-04-05 (Sat, 05 April 2014).
+// Released under the GPL Version 3 license (https://github.com/roydukkey/Dado.Validators/raw/master/LICENSE).
 //---------------------------------------------------------------------------------
 
 using System.Web.UI;
@@ -106,7 +105,7 @@ namespace Dado.Validators
 			get { return base.EnableClientScript; }
 			set { base.EnableClientScript = value; }
 		}
-		
+
 		/// <summary>
 		///		Gets or sets the text color of validation messages.
 		/// </summary>
@@ -121,7 +120,7 @@ namespace Dado.Validators
 			get { return base.ForeColor; }
 			set { base.ForeColor = value; }
 		}
-		
+
 		#endregion Control Attributes
 
 		#region Protected Properties
@@ -229,7 +228,7 @@ namespace Dado.Validators
 					//throw new Exception("We Are Here! B");
 
 					Page.ClientScript.RegisterStartupScript(typeof(BaseValidator), VALIDATOR_SCRIPT_KEY, String.Format(VALIDATOR_INITIALIZE_SCRIPT, WebFormScriptReference), true);
-					
+
 					base.OnPreRender(e);
 					preRenderCalled = true;
 
@@ -256,13 +255,13 @@ namespace Dado.Validators
 			if (!Enabled) CssClass += " " + "aspNetDisabled";
 			else if (!IsValid) CssClass += " " + CssClassInvalid;
 
-			// No point rendering if we have errors 
+			// No point rendering if we have errors
 			if (!PropertiesValid) return;
 
 			// Make sure we are in a form tag with runat=server.
 			if (Page != null) Page.VerifyRenderingInServerForm(this);
 
-			// work out what we are displaying 
+			// work out what we are displaying
 			WebControls.ValidatorDisplay display = Display;
 			bool displayContents;
 			bool displayTags;
@@ -280,7 +279,7 @@ namespace Dado.Validators
 			if (displayTags && RenderUplevel)
 				RegisterValidatorDeclaration();
 
-			// Display it 
+			// Display it
 			if (displayTags) RenderBeginTag(writer);
 
 			if (displayContents) {
@@ -350,7 +349,7 @@ namespace Dado.Validators
 		/// <param name="encode">A Boolean value indicating whether to encode the custom attribute to register.</param>
 		internal static void AddExpandoAttribute(Control control, HtmlTextWriter writer, string controlId, string attributeName, string attributeValue, bool encode)
 		{
-			// if writer is not null, assuming the expando attribute is written out explicitly 
+			// if writer is not null, assuming the expando attribute is written out explicitly
 			if (writer != null) {
 				writer.AddAttribute(attributeName, attributeValue, encode);
 			}

@@ -1,7 +1,6 @@
 ﻿//---------------------------------------------------------------------------------
-// Dado Validators, Copyright 2014 roydukkey.
-// Dual licensed under the MIT (http://www.roydukkey.com/mit) and
-// GPL Version 2 (http://www.roydukkey.com/gpl) licenses.
+// Dado Validators v1.0.0, Copyright 2014 roydukkey, 2014-04-05 (Sat, 05 April 2014).
+// Released under the GPL Version 3 license (https://github.com/roydukkey/Dado.Validators/raw/master/LICENSE).
 //---------------------------------------------------------------------------------
 
 namespace Dado.Validators
@@ -64,7 +63,7 @@ namespace Dado.Validators
 		}
 
 		#endregion Control Attributes
-		
+
 		#region Protected Methods
 
 		/// <summary>
@@ -88,14 +87,14 @@ namespace Dado.Validators
 		/// <returns>true if the control specified by ControlToValidate is a valid control; otherwise, false.</returns>
 		protected override bool ControlPropertiesValid()
 		{
-			// Check for blank control to validate 
+			// Check for blank control to validate
 			string controlToValidate = ControlToValidate;
 			if (controlToValidate.Length == 0)
 				throw new Exception(
 					String.Format("The {0} property of '{1}' cannot be blank.", "ControlToValidate", ID)
 				);
 
-			// Check that the property points to a valid control. Will throw and exception if not found 
+			// Check that the property points to a valid control. Will throw and exception if not found
 			CheckControlValidationProperty(controlToValidate, "ControlToValidate");
 
 			return true;
@@ -124,7 +123,7 @@ namespace Dado.Validators
 			else if (_isRadioButtonList = c is WebControls.RadioButtonList) { }
 			else { _isFileUpload = c is WebControls.FileUpload; }
 
-			// get its validation property 
+			// get its validation property
 			PropertyDescriptor prop = GetValidationProperty(c);
 			if (prop == null)
 				throw new Exception(

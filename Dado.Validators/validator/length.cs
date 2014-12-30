@@ -1,7 +1,6 @@
 ﻿//---------------------------------------------------------------------------------
-// Dado Validators, Copyright 2014 roydukkey.
-// Dual licensed under the MIT (http://www.roydukkey.com/mit) and
-// GPL Version 2 (http://www.roydukkey.com/gpl) licenses.
+// Dado Validators v1.0.0, Copyright 2014 roydukkey, 2014-04-05 (Sat, 05 April 2014).
+// Released under the GPL Version 3 license (https://github.com/roydukkey/Dado.Validators/raw/master/LICENSE).
 //---------------------------------------------------------------------------------
 
 namespace Dado.Validators
@@ -40,7 +39,7 @@ namespace Dado.Validators
 		}
 		/// <summary>
 		///		Indicates the maximum text length for the control value.
-		/// </summary> 
+		/// </summary>
 		[
 			Category("Behavior"),
 			Themeable(false),
@@ -74,7 +73,7 @@ namespace Dado.Validators
 		}
 		/// <summary>
 		///		Indicates the maximum text length for the control value.
-		/// </summary> 
+		/// </summary>
 		[
 			Category("Behavior"),
 			Themeable(false),
@@ -156,7 +155,7 @@ namespace Dado.Validators
 				if (MaximumLength > 0 && controlValue.Length > MaximumLength) {
 					ErrorMessage = MaximumLengthErrorMessage;
 					return false;
-				}	
+				}
 			}
 			return true;
 		}

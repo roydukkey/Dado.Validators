@@ -1,8 +1,3 @@
-<!--
-// Dado Validators, Copyright 2014 roydukkey.
-// Dual licensed under the MIT (http://www.roydukkey.com/mit) and
-// GPL Version 2 (http://www.roydukkey.com/gpl) licenses.
--->
 <!doctype html><%@ Master Language="C#" CodeBehind="main.master.cs" Inherits="Web.Master.Main" %>
 <html ID="htmHtml" runat="server" lang="en">
 <head runat="server">
@@ -10,9 +5,9 @@
 	<title></title>
 	<link rel="stylesheet" type="text/css" href="~/style/custom.css" />
 	<asp:ContentPlaceHolder id="cphStyle" runat="server"><!-- Insert additional stylesheets to be included in the head. --></asp:ContentPlaceHolder>
-	<%=@"<!--[if lte IE 8]><script>/* Set Up HTML 5 Elements for IE7 <= */
+	<!--[if lte IE 8]><script>/* Set Up HTML 5 Elements for IE7 <= */
 	(function(){var a,b=""pagewrap,header,nav,subheader,maincontent,pagecontent,content,sidebar,footer,clear"".split("","");for(a in b)document.createElement(b[a])})();
-	</script><![endif]-->"%>
+	</script><![endif]-->
 </head>
 <body id="htmBody" runat="server">
 	<form id="aspnetForm" runat="server">
@@ -24,7 +19,7 @@
 						</asp:ContentPlaceHolder>
 						<clear></clear>
 					</content>
-					<clear></clear>	
+					<clear></clear>
 				</maincontent>
 				<clear></clear>
 			</pagecontent>

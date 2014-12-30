@@ -1,7 +1,6 @@
 ﻿//---------------------------------------------------------------------------------
-// Dado Validators, Copyright 2014 roydukkey.
-// Dual licensed under the MIT (http://www.roydukkey.com/mit) and
-// GPL Version 2 (http://www.roydukkey.com/gpl) licenses.
+// Dado Validators v1.0.0, Copyright 2014 roydukkey, 2014-04-05 (Sat, 05 April 2014).
+// Released under the GPL Version 3 license (https://github.com/roydukkey/Dado.Validators/raw/master/LICENSE).
 //---------------------------------------------------------------------------------
 
 namespace Dado.Validators
@@ -118,7 +117,7 @@ namespace Dado.Validators
 		/// <returns>true if the value in the input control is valid; otherwise, false.</returns>
 		protected override bool EvaluateIsValid()
 		{
-			// If no control is specified, we always fire the event. If they have specified a control, we 
+			// If no control is specified, we always fire the event. If they have specified a control, we
 			// only fire the event if the input is non-blank.
 			string controlValue = String.Empty;
 			string controlToValidate = ControlToValidate;

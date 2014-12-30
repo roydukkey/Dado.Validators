@@ -89,8 +89,3 @@ Additional, Mono is supported since v1.0.0 of Dado.Validators.
 		</td>
 	</tr>
 </table>
-
-
-## License
-
-Dual licensed under the MIT (http://www.roydukkey.com/mit) and GPL (http://www.roydukkey.com/gpl) licenses.

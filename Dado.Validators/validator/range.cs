@@ -1,7 +1,6 @@
 ﻿//---------------------------------------------------------------------------------
-// Dado Validators, Copyright 2014 roydukkey.
-// Dual licensed under the MIT (http://www.roydukkey.com/mit) and
-// GPL Version 2 (http://www.roydukkey.com/gpl) licenses.
+// Dado Validators v1.0.0, Copyright 2014 roydukkey, 2014-04-05 (Sat, 05 April 2014).
+// Released under the GPL Version 3 license (https://github.com/roydukkey/Dado.Validators/raw/master/LICENSE).
 //---------------------------------------------------------------------------------
 
 namespace Dado.Validators
@@ -101,10 +100,10 @@ namespace Dado.Validators
 			Debug.Assert(text != null, "Should have already caught this!");
 
 			// Special case: if the string is blank, we don't try to validate it. The input should be
-			// trimmed for coordination with the RequiredFieldValidator. 
+			// trimmed for coordination with the RequiredFieldValidator.
 			if (text.Trim().Length == 0) return true;
 
-			// VSWhidbey 83168 
+			// VSWhidbey 83168
 			if (Type == WebControls.ValidationDataType.Date && !DetermineRenderUplevel() && !IsInStandardDateFormat(text))
 				text = ConvertToShortDateString(text);
 			return (
@@ -118,11 +117,11 @@ namespace Dado.Validators
 		#region Private Methods
 
 		/// <summary>
-		///		
+		///
 		/// </summary>
 		private void ValidateValues()
 		{
-			// Check the control values can be converted to data type 
+			// Check the control values can be converted to data type
 			string maximumValue = MaximumValue;
 			if (!CanConvert(maximumValue, Type, CultureInvariantValues))
 				throw new HttpException(@"SR.GetString( SR.Validator_value_bad_type, new string[] { maximumValue, ""MaximumValue"", ID, PropertyConverter.EnumToString(typeof(ValidationDataType), Type) } )");
@@ -131,7 +130,7 @@ namespace Dado.Validators
 			if (!CanConvert(minumumValue, Type, CultureInvariantValues))
 				throw new HttpException(@"SR.GetString( SR.Validator_value_bad_type, new string[] { minumumValue, ""MinimumValue"", ID, PropertyConverter.EnumToString(typeof(ValidationDataType), Type) } )");
 
-			// Check for overlap. 
+			// Check for overlap.
 			if (Compare(minumumValue, CultureInvariantValues, maximumValue, CultureInvariantValues, WebControls.ValidationCompareOperator.GreaterThan, Type))
 				throw new HttpException(@"SR.GetString( SR.Validator_range_overalap, new string[] { maximumValue, minumumValue, ID, } )");
 		}

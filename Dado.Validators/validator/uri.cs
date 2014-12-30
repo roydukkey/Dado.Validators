@@ -1,7 +1,6 @@
 ﻿//---------------------------------------------------------------------------------
-// Dado Validators, Copyright 2014 roydukkey.
-// Dual licensed under the MIT (http://www.roydukkey.com/mit) and
-// GPL Version 2 (http://www.roydukkey.com/gpl) licenses.
+// Dado Validators v1.0.0, Copyright 2014 roydukkey, 2014-04-05 (Sat, 05 April 2014).
+// Released under the GPL Version 3 license (https://github.com/roydukkey/Dado.Validators/raw/master/LICENSE).
 //---------------------------------------------------------------------------------
 
 namespace Dado.Validators
@@ -107,7 +106,7 @@ namespace Dado.Validators
 		/// <returns>true if the value in the input control is valid; otherwise, false.</returns>
 		protected override bool EvaluateIsValid()
 		{
-			// Get the control value, return true if it is not found 
+			// Get the control value, return true if it is not found
 			string controlValue = GetControlValidationValue(ControlToValidate);
 			if ((controlValue == null || controlValue.Trim().Length == 0)) {
 				Debug.Fail("Should have been caught by PropertiesValid check");
@@ -130,7 +129,7 @@ namespace Dado.Validators
 		/// <param name="value"></param>
 		protected virtual void SetControlValidationValue(string name, string value)
 		{
-			// get the control using the relative name 
+			// get the control using the relative name
 			Control control = NamingContainer.FindControl(name);
 			if (control == null) {
 				return;
@@ -146,7 +145,7 @@ namespace Dado.Validators
 					return;
 				}
 
-				// get its value as a string 
+				// get its value as a string
 				object currentValue = prop.GetValue(control);
 				if (currentValue is ListItem) {
 					((ListItem)currentValue).Value = value;

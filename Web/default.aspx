@@ -1,9 +1,4 @@
-﻿<%-----------------------------------------------------------------------------------
-// Dado Validators, Copyright 2014 roydukkey.
-// Dual licensed under the MIT (http://www.roydukkey.com/mit) and
-// GPL Version 2 (http://www.roydukkey.com/gpl) licenses.
------------------------------------------------------------------------------------%>
-<%@ Page Title="Dado Validators Demo" Language="C#" MasterPageFile="~/master/main.master" AutoEventWireup="true" CodeBehind="default.aspx.cs" Inherits="Web.Default" %>
+﻿<%@ Page Title="Dado Validators Demo" Language="C#" MasterPageFile="~/master/main.master" AutoEventWireup="true" CodeBehind="default.aspx.cs" Inherits="Web.Default" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="cphStyle" runat="server">
 </asp:Content>
@@ -137,7 +132,7 @@
 				<td colspan="2"></td>
 			</tr>
 		</table>
-	
+
 		<asp:Button ID="btnSubmit" runat="server" ValidationGroup="vlgSubmit" Text="Submit" />
 
 		<asp:Literal ID="litTest" runat="server" />
