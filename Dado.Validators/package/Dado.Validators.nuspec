@@ -1,0 +1,17 @@
+﻿<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+	<metadata>
+		<id>Dado.Validators</id>
+		<version>$version$</version>
+		<authors>roydukkey</authors>
+		<copyright>Copyright 2014 roydukkey</copyright>
+		<title>Dado.Validators</title>
+		<licenseUrl>https://github.com/roydukkey/Dado.Validators/raw/master/LICENSE</licenseUrl>
+		<projectUrl>https://github.com/roydukkey/Dado.Validators/</projectUrl>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<description>An healthy alternative to the ASP.NET and Mono validation controls.</description>
+		<summary>An healthy alternative to the ASP.NET and Mono validation controls.</summary>
+		<language>en-US</language>
+		<tags>Form Input Validation Controls ClassNameToggled</tags>
+	</metadata>
+</package>
