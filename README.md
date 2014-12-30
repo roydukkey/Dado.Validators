@@ -4,8 +4,6 @@ Dado.Validators (version 1.0.0)
 Dado Validators is an extension of the System.Web.UI.WebControls.BaseValidator class provided by .NET 4.
 Additional, Mono is supported since v1.0.0 of Dado.Validators.
 
-**Download** [Solution](//github.com/roydukkey/Dado.Validators/zipball/master) | [Assembly](//github.com/roydukkey/Dado.Validators/blob/master/Release/DadoValidatorsAssembly-v1.0.0.zip?raw=true)
-
 
 ## Features
 * __Styling by Class Name:__ Dado Validators doesn't rely on non-breaking spaces or inline styles, but rather entirely on the class name.
@@ -15,7 +13,7 @@ Additional, Mono is supported since v1.0.0 of Dado.Validators.
 
 ## Included Validators
 
-![Two Face Singing Example](http://l33t.roydukkey.com/dadoValidatorsToolbox.png)
+![VS Dado.Validators Pane](http://l33t.roydukkey.com/dadoValidatorsToolbox.png)
 
 <table>
 	<tr>
