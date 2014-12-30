@@ -11,9 +11,7 @@
     <RootNamespace>Dado</RootNamespace>
     <AssemblyName>Dado.Validators</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <ReleaseVersion>0.0.0.2</ReleaseVersion>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -43,8 +41,18 @@
     <Reference Include="System.Web" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Web.Extensions" />
-  </ItemGroup>
-  <ItemGroup>
+		<EmbeddedResource Include="image\range.bmp" />
+		<EmbeddedResource Include="image\requiredField.bmp" />
+		<EmbeddedResource Include="image\regularExpression.bmp" />
+		<EmbeddedResource Include="image\length.bmp" />
+		<EmbeddedResource Include="image\phone.bmp" />
+		<EmbeddedResource Include="image\zipCode.bmp" />
+		<EmbeddedResource Include="image\compare.bmp" />
+		<EmbeddedResource Include="image\email.bmp" />
+		<EmbeddedResource Include="image\fileType.bmp" />
+		<EmbeddedResource Include="image\custom.bmp" />
+		<EmbeddedResource Include="js\validation.dev.js" />
+		<EmbeddedResource Include="js\validation.min.js" />
     <Compile Include="extension\string.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="global.cs" />
@@ -66,45 +74,8 @@
     <Compile Include="validator\usdCurrency.cs" />
     <Compile Include="validator\zipCode.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="image\range.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="image\requiredField.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="image\regularExpression.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="image\length.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="image\phone.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="image\zipCode.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="image\compare.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="image\email.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="image\fileType.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="image\custom.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="js\validation.dev.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="js\validation.min.js" />
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
