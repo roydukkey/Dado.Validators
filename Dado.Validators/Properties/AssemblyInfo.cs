@@ -1,5 +1,5 @@
 ﻿//---------------------------------------------------------------------------------
-// Dado Validators v1.0.0, Copyright 2014 roydukkey, 2014-04-05 (Sat, 05 April 2014).
+// Dado Validators v1.0.1, Copyright 2015 roydukkey, 2015-01-07 (Wed, 07 Jan 2015).
 // Released under the GPL Version 3 license (https://github.com/roydukkey/Dado.Validators/raw/master/LICENSE).
 //---------------------------------------------------------------------------------
 
@@ -37,7 +37,7 @@ using System.Web.UI;
 //
 //			<major>.<minor>.<bugfix>.<devlopment>
 //
-[assembly: AssemblyVersion("1.0.0")]
+[assembly: AssemblyVersion("1.0.1")]
 
 [assembly: WebResource("Dado.js.validation.dev.js", "text/javascript")]
 [assembly: WebResource("Dado.js.validation.min.js", "text/javascript")]
