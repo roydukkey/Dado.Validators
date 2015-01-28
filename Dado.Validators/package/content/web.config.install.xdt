@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
-  <system.web>
-		<pages>
-			<controls>
+  <system.web xdt:Transform="InsertIfMissing">
+		<pages xdt:Transform="InsertIfMissing">
+			<controls xdt:Transform="InsertIfMissing">
 				<add tagPrefix="Dado" namespace="Dado.Validators" assembly="$StrongAssemblyReference$" xdt:Locator="Match(tagPrefix, namespace)" xdt:Transform="InsertIfMissing" />
 			</controls>
 		</pages>
