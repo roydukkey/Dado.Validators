@@ -1,4 +1,4 @@
-Dado.Validators (version 1.0.0)
+Dado.Validators (version 1.0.1)
 =================================
 
 Dado Validators is an extension of the System.Web.UI.WebControls.BaseValidator class provided by .NET 4.
