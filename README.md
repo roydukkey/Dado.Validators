@@ -1,3 +1,5 @@
+I have no plans to continue maintain this repo.
+
 Dado.Validators (version 1.0.1)
 =================================
 
